@@ -14,9 +14,9 @@ export default function BajaPage({
   searchParams: Promise<{ token?: string }>;
 }) {
   return (
-    <div className="prose-width max-w-xl py-12">
-      <h1 className="font-serif text-4xl tracking-tight">Salir de la lista</h1>
-      <p className="mt-4 text-muted">Si este enlace es de un correo nuestro, confirma y dejamos de escribirte.</p>
+    <div className="prose-width max-w-xl py-14">
+      <h1>Salir de la lista</h1>
+      <p className="lede">Si este enlace es de un correo nuestro, confirma y dejamos de escribirte.</p>
       <Suspense fallback={<p className="mt-6 text-sm text-muted">Cargando…</p>}>
         <UnsubscribeGate searchParams={searchParams} />
       </Suspense>

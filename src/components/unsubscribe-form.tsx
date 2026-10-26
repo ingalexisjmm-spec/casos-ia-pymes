@@ -33,7 +33,7 @@ export function UnsubscribeForm({ token }: { token: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="bg-foreground px-4 py-2 text-sm font-semibold text-background disabled:opacity-60"
+        className="btn btn-ink"
       >
         {pending ? "Actualizando…" : "Confirmar baja"}
       </button>

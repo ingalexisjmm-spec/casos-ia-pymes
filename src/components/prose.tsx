@@ -3,7 +3,7 @@ export function Prose({ text }: { text: string }) {
   return (
     <div className="space-y-4">
       {blocks.map((block, index) => (
-        <p key={index} className="text-base leading-7">
+        <p key={index}>
           {block}
         </p>
       ))}

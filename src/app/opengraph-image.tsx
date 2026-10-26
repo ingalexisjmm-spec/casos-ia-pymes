@@ -13,8 +13,8 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           width: "100%",
           height: "100%",
-          background: "#f3efe4",
-          color: "#1c1915",
+          background: "#f3efe6",
+          color: "#1a1814",
           padding: "72px",
         }}
       >
@@ -30,7 +30,7 @@ export default function OpenGraphImage() {
         >
           Usos de IA para negocios
         </div>
-        <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#5f584e" }}>
+        <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#1e5640" }}>
           Problema, herramientas y dificultad. Sin métricas inventadas.
         </div>
       </div>

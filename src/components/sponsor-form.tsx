@@ -39,23 +39,16 @@ export function SponsorForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="relative grid gap-4 border border-line bg-card p-5">
+    <form onSubmit={onSubmit} className="plate relative">
       <div>
-        <label htmlFor="sponsor-name" className="text-sm font-medium">
-          Nombre del negocio o producto
+        <label htmlFor="sponsor-name" className="label">
+          nombre del negocio o producto
         </label>
-        <input
-          id="sponsor-name"
-          name="name"
-          required
-          maxLength={80}
-          autoComplete="organization"
-          className="mt-1 w-full border border-line bg-background px-3 py-2"
-        />
+        <input id="sponsor-name" name="name" required maxLength={80} autoComplete="organization" className="field mt-2" />
       </div>
       <div>
-        <label htmlFor="sponsor-email" className="text-sm font-medium">
-          Correo
+        <label htmlFor="sponsor-email" className="label">
+          correo
         </label>
         <input
           id="sponsor-email"
@@ -64,12 +57,12 @@ export function SponsorForm() {
           required
           autoComplete="email"
           maxLength={254}
-          className="mt-1 w-full border border-line bg-background px-3 py-2"
+          className="field mt-2"
         />
       </div>
       <div>
-        <label htmlFor="sponsor-website" className="text-sm font-medium">
-          Sitio web <span className="font-normal text-muted">(opcional)</span>
+        <label htmlFor="sponsor-website" className="label">
+          sitio web <span className="font-normal">(opcional)</span>
         </label>
         <input
           id="sponsor-website"
@@ -78,12 +71,12 @@ export function SponsorForm() {
           inputMode="url"
           placeholder="https://"
           maxLength={300}
-          className="mt-1 w-full border border-line bg-background px-3 py-2"
+          className="field mt-2"
         />
       </div>
       <div>
-        <label htmlFor="sponsor-blurb" className="text-sm font-medium">
-          Frase para la ficha
+        <label htmlFor="sponsor-blurb" className="label">
+          frase para la ficha
         </label>
         <textarea
           id="sponsor-blurb"
@@ -92,7 +85,7 @@ export function SponsorForm() {
           maxLength={160}
           rows={3}
           placeholder="Una línea sobre qué haces. Máximo 160 caracteres."
-          className="mt-1 w-full border border-line bg-background px-3 py-2"
+          className="field mt-2"
         />
       </div>
       <div className="absolute h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -104,7 +97,7 @@ export function SponsorForm() {
       <button
         type="submit"
         disabled={status.kind === "loading"}
-        className="bg-pine px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+        className="btn btn-olive"
       >
         {status.kind === "loading" ? "Abriendo Stripe…" : `Pagar USD ${SPONSOR_PRICE_USD} con Stripe`}
       </button>

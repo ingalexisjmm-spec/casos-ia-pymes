@@ -49,7 +49,7 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
   const related = await getRelatedCases(item);
 
   return (
-    <article className="prose-width py-12">
+    <article className="prose-width py-14 sm:py-16">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -61,40 +61,39 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
           isPartOf: { "@type": "WebSite", name: "Casos IA", url: absoluteUrl("/") },
         }}
       />
-      <p className="text-sm text-muted">
+      <p className="label">
         <Link href="/" className="hover:text-pine">
-          Directorio
+          directorio
         </Link>
       </p>
-      <p className="mt-6 text-xs tracking-wide text-muted uppercase">
+      <p className="label mt-8">
         {item.categories.map((id) => categoryLabel(id)).join(" · ")}
         {" · "}
         {difficultyLabel(item.difficulty)}
+        {item.isSeed ? " · ejemplo inicial" : ""}
       </p>
-      <h1 className="mt-3 max-w-3xl font-serif text-4xl leading-tight tracking-tight sm:text-5xl">
-        {item.title}
-      </h1>
-      <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">{item.summary}</p>
+      <h1 className="mt-3 max-w-3xl">{item.title}</h1>
+      <p className="lede">{item.summary}</p>
       {item.isSeed ? (
-        <p className="mt-5 max-w-2xl border border-line bg-highlight px-4 py-3 text-sm leading-6">
+        <p className="note">
           Ejemplo inicial. Describe una forma de trabajar, no el resultado de un negocio real.
         </p>
       ) : null}
-      <div className="mt-8 max-w-2xl">
+      <div className="reading mt-8">
         <Prose text={item.body} />
       </div>
-      <dl className="mt-8 grid max-w-2xl gap-4 border-t border-line pt-6 text-sm sm:grid-cols-2">
+      <dl className="mt-10 grid max-w-2xl gap-6 border-t border-line pt-6 text-[0.95rem] sm:grid-cols-2">
         <div>
-          <dt className="text-muted">Herramientas</dt>
+          <dt className="label">herramientas</dt>
           <dd className="mt-1">{item.tools.join(", ")}</dd>
         </div>
         <div>
-          <dt className="text-muted">Dificultad</dt>
+          <dt className="label">dificultad</dt>
           <dd className="mt-1">{difficultyLabel(item.difficulty)}</dd>
         </div>
         {item.sourceUrl ? (
           <div className="sm:col-span-2">
-            <dt className="text-muted">Fuente</dt>
+            <dt className="label">fuente</dt>
             <dd className="mt-1">
               <a href={item.sourceUrl} className="underline hover:text-pine" rel="nofollow noopener noreferrer">
                 {item.sourceUrl}
@@ -104,10 +103,8 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
         ) : null}
       </dl>
       {related.length > 0 ? (
-        <section className="mt-12 max-w-2xl" aria-labelledby="relacionados">
-          <h2 id="relacionados" className="font-serif text-2xl tracking-tight">
-            También en este tema
-          </h2>
+        <section className="mt-14 max-w-2xl" aria-labelledby="relacionados">
+          <h2 id="relacionados">También en este tema</h2>
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {related.map((candidate) => (
               <li key={candidate.slug}>

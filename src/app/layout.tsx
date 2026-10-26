@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree, Fraunces } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono } from "next/font/google";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -7,16 +7,18 @@ import { SITE_DESCRIPTION, SITE_NAME, getSiteUrl } from "@/lib/site";
 
 import "./globals.css";
 
-const sans = Figtree({
+const text = Fraunces({
   subsets: ["latin"],
-  variable: "--font-figtree",
   display: "swap",
+  variable: "--font-text",
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
-const serif = Fraunces({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: ["400", "500"],
   display: "swap",
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${sans.variable} ${serif.variable} h-full antialiased`}>
+    <html lang="es" className={`${text.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full bg-background text-foreground">
         <a
           href="#contenido"

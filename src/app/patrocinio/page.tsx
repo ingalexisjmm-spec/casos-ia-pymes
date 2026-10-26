@@ -18,16 +18,14 @@ export default function PatrocinioPage({
   const mode = stripeKeyMode();
 
   return (
-    <div className="prose-width grid gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+    <div className="prose-width grid gap-12 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:py-16">
       <div>
-        <p className="text-sm font-semibold tracking-[0.16em] text-pine uppercase">Patrocinio</p>
-        <h1 className="mt-3 font-serif text-4xl tracking-tight sm:text-5xl">
-          Un espacio en el directorio
-        </h1>
-        <p className="mt-4 max-w-xl text-lg leading-8 text-muted">
+        <p className="label">patrocinio · usd {SPONSOR_PRICE_USD}</p>
+        <h1 className="mt-4">Un espacio en el directorio</h1>
+        <p className="lede">
           Para quien tiene un producto útil para negocios que están viendo cómo usar IA. El precio publicado es USD {SPONSOR_PRICE_USD}, pago único.
         </p>
-        <ul className="mt-6 max-w-xl space-y-3 text-sm leading-6">
+        <ul className="mt-8 max-w-xl space-y-3 text-[0.98rem] leading-6">
           <li className="border-t border-line pt-3">Ficha con tu nombre, un enlace y una frase.</li>
           <li className="border-t border-line pt-3">Mención en un envío del boletín.</li>
           <li className="border-t border-line pt-3">
@@ -35,7 +33,7 @@ export default function PatrocinioPage({
           </li>
         </ul>
         {mode === "test" ? (
-          <p className="mt-6 max-w-xl border border-line bg-highlight px-4 py-3 text-sm leading-6">
+          <p className="note">
             La clave de Stripe es de prueba. Puedes recorrer el pago sin un cargo real.
           </p>
         ) : null}
@@ -56,14 +54,14 @@ async function CheckoutNotice({
   const { estado } = await searchParams;
   if (estado === "pagado") {
     return (
-      <p className="mt-6 max-w-xl border border-line bg-card px-4 py-3 text-sm leading-6" role="status">
+      <p className="note" role="status">
         Stripe te devolvió a esta página. Publicamos la ficha cuando el pago queda confirmado. Volver aquí no basta: la confirmación llega por el webhook.
       </p>
     );
   }
   if (estado === "cancelado") {
     return (
-      <p className="mt-6 max-w-xl border border-line bg-card px-4 py-3 text-sm leading-6" role="status">
+      <p className="note" role="status">
         El pago se canceló. No registramos un cobro por esta vuelta.
       </p>
     );

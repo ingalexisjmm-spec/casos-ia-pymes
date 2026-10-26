@@ -37,8 +37,8 @@ export function NewsletterForm({ source }: { source: string }) {
 
   return (
     <form onSubmit={onSubmit} className="relative grid gap-2">
-      <label htmlFor={`email-${source}`} className="text-sm font-medium">
-        Correo
+      <label htmlFor={`email-${source}`} className="label">
+        correo
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
@@ -49,13 +49,9 @@ export function NewsletterForm({ source }: { source: string }) {
           autoComplete="email"
           maxLength={254}
           placeholder="tu@correo.com"
-          className="w-full border border-line bg-card px-3 py-2 text-base"
+          className="field"
         />
-        <button
-          type="submit"
-          disabled={status.kind === "loading"}
-          className="bg-foreground px-4 py-2 text-sm font-semibold text-background disabled:opacity-60"
-        >
+        <button type="submit" disabled={status.kind === "loading"} className="btn btn-ink">
           {status.kind === "loading" ? "Enviando…" : "Quiero recibirlas"}
         </button>
       </div>

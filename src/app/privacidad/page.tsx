@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function PrivacidadPage() {
   return (
-    <article className="prose-width max-w-3xl py-12">
-      <h1 className="font-serif text-4xl tracking-tight">Privacidad</h1>
-      <div className="mt-6 space-y-4 text-base leading-7">
+    <article className="reading prose-width py-14">
+      <h1>Privacidad</h1>
+      <div className="mt-8">
         <p>
           {SITE_NAME} guarda el correo de quien se apunta al boletín, y el nombre, el correo, el sitio y la frase de quien compra un patrocinio.
         </p>

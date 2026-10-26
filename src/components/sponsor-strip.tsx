@@ -5,9 +5,7 @@ export function SponsorStrip({ sponsors }: { sponsors: SponsorListing[] }) {
 
   return (
     <section className="prose-width pb-4" aria-labelledby="patrocinadores-titulo">
-      <h2 id="patrocinadores-titulo" className="font-serif text-2xl tracking-tight">
-        Patrocinadores
-      </h2>
+      <h2 id="patrocinadores-titulo">Patrocinadores</h2>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
         {sponsors.map((sponsor) => (
           <li key={sponsor.id} className="border border-line bg-card p-4">

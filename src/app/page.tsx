@@ -30,16 +30,14 @@ export default async function HomePage() {
           },
         }}
       />
-      <section className="prose-width py-12 sm:py-16">
-        <p className="text-sm font-semibold tracking-[0.16em] text-pine uppercase">Directorio</p>
-        <h1 className="mt-3 max-w-3xl font-serif text-4xl leading-tight tracking-tight sm:text-6xl">
-          Usos de IA para negocios
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">
+      <section className="prose-width pt-14 pb-10 sm:pt-20">
+        <p className="label">directorio · {catalog.cases.length} fichas</p>
+        <h1 className="mt-4 max-w-3xl">Usos de IA para negocios</h1>
+        <p className="lede">
           Ideas concretas para emprendedores y equipos. Cada ficha dice qué problema resuelve, qué herramientas usa y qué tan difícil es empezar.
         </p>
-        <p className="mt-4 text-sm">
-          <a href="#boletin" className="font-semibold underline decoration-line underline-offset-4 hover:text-pine">
+        <p className="mt-5">
+          <a href="#boletin" className="font-medium text-pine underline decoration-line underline-offset-4">
             Recibir notas cortas por correo
           </a>
         </p>
@@ -62,7 +60,7 @@ function Notice({
 }) {
   if (count === 0 && source === "supabase") {
     return (
-      <p className="mt-6 max-w-2xl border border-line bg-highlight px-4 py-3 text-sm leading-6">
+      <p className="note">
         La base está conectada y todavía no hay fichas publicadas. Carga el contenido inicial con el archivo de semilla.
       </p>
     );
@@ -70,7 +68,7 @@ function Notice({
 
   if (notice === "local-examples") {
     return (
-      <p className="mt-6 max-w-2xl border border-line bg-highlight px-4 py-3 text-sm leading-6">
+      <p className="note">
         Estás viendo los ejemplos iniciales del proyecto. No son casos de un cliente. Al conectar Supabase, el directorio lee la tabla de fichas.
       </p>
     );
