@@ -2,6 +2,8 @@ import "server-only";
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+import { supabaseServiceRoleSecret } from "@/lib/secrets";
+
 function serverClient(url: string, key: string): SupabaseClient {
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -17,7 +19,7 @@ export function supabaseAnonKey(): string {
 }
 
 export function supabaseServiceRoleKey(): string {
-  return process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ?? "";
+  return supabaseServiceRoleSecret();
 }
 
 export function hasSupabaseConfig(): boolean {

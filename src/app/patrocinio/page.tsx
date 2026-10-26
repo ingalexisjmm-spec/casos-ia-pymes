@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { SponsorForm } from "@/components/sponsor-form";
-import { SPONSOR_PRICE_USD, stripeKeyMode } from "@/lib/site";
+import { SPONSOR_PRICE_USD } from "@/lib/site";
+import { stripeKeyMode } from "@/lib/stripe";
 
 export const metadata: Metadata = {
   title: "Patrocinio",
