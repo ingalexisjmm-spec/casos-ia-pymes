@@ -38,9 +38,11 @@ Copia `.env.example` a `.env.local`. No subas `.env.local` ni claves reales.
 | `NEXT_PUBLIC_SUPABASE_URL` | Lectura y escritura | Directorio en vivo, boletín, patrocinio |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Lectura de fichas publicadas (RLS) | Directorio en vivo |
 | `SUPABASE_SERVICE_ROLE_KEY` | Insertar suscriptores y patrocinios. Solo servidor | Boletín y patrocinio |
+| `CASOS_SR_1`, `CASOS_SR_2` | Partes de la service role si el valor completo se trunca. Se concatenan sin separador y tienen prioridad | Alternativa de la clave anterior |
 | `RESEND_API_KEY` | Envío de correos | Confirmación del boletín y recibo |
 | `RESEND_FROM_EMAIL` | Remitente, por ejemplo `Casos IA <hola@tudominio.com>` | Los mismos correos |
 | `STRIPE_SECRET_KEY` | Checkout. Puede ser una clave restringida `rk_` | Cobrar el patrocinio |
+| `CASOS_SK_1`, `CASOS_SK_2` | Partes de la clave de Stripe si el valor completo se trunca. Se concatenan sin separador y tienen prioridad | Alternativa de la clave anterior |
 | `STRIPE_PRICE_ID` | Precio único de USD 500 | Recomendado |
 | `STRIPE_PAYMENT_LINK` | Alternativa si no creas la sesión desde el servidor | Alternativa de cobro |
 | `STRIPE_WEBHOOK_SECRET` | Verificar `checkout.session.*` | Publicar la ficha tras el pago |

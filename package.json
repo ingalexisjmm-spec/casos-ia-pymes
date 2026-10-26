@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --import tsx --test tests/catalog.test.ts",
+    "test": "node --conditions=react-server --import tsx --test tests/catalog.test.ts tests/secrets.test.ts",
     "db:seed-sql": "tsx scripts/build-seed-sql.ts"
   },
   "dependencies": {

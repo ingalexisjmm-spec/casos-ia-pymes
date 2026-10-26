@@ -30,10 +30,3 @@ function isAbsoluteHttp(value: string): boolean {
     return false;
   }
 }
-
-export function stripeKeyMode(): "test" | "live" | "unknown" {
-  const key = process.env.STRIPE_SECRET_KEY?.trim() ?? "";
-  if (key.startsWith("sk_test_") || key.startsWith("rk_test_")) return "test";
-  if (key.startsWith("sk_live_") || key.startsWith("rk_live_")) return "live";
-  return "unknown";
-}
