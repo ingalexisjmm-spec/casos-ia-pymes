@@ -1,8 +1,9 @@
 import type { UseCase } from "../lib/types";
 
 /**
- * Contenido inicial de ejemplo.
- * No son casos de un cliente ni resultados medidos.
+ * Directorio del proyecto.
+ * Las fichas con isSeed son ejemplos iniciales, no casos de un cliente.
+ * Las demás citan la ayuda oficial en sourceUrl.
  * La misma lista se vuelca a supabase/seed.sql.
  */
 export const seedUseCases: UseCase[] = [
@@ -269,5 +270,53 @@ export const seedUseCases: UseCase[] = [
     difficulty: "facil",
     sourceUrl: null,
     isSeed: true,
+  },
+  {
+    slug: "leer-audios-de-clientes",
+    title: "Leer los audios de clientes sin escucharlos",
+    summary:
+      "La transcripción de WhatsApp pasa el audio de un cliente a texto para anotar el pedido o la pregunta.",
+    body: "Los clientes dejan el pedido o la duda en un audio de WhatsApp. Escuchar cada nota de voz frena anotar lo que pidieron.\n\nWhatsApp puede mostrar ese audio como texto. La transcripción viene apagada. Se activa en Ajustes, en Chats, en Transcripciones de mensajes de voz. Se genera en el dispositivo. El español está entre los idiomas que admite la ayuda oficial.\n\nEl texto puede equivocarse. Revisa montos, cantidades y direcciones antes de confirmar un pedido. Si algo no cierra, pide el dato por escrito.\n\nQuien envía el audio no ve la transcripción. La lees tú en el chat donde llegó.",
+    categories: ["atencion", "ventas"],
+    tools: ["WhatsApp", "WhatsApp Business"],
+    difficulty: "facil",
+    sourceUrl: "https://faq.whatsapp.com/241617298315321/?cms_platform=android&locale=es_ES",
+    isSeed: false,
+  },
+  {
+    slug: "preguntar-manuales-de-proveedores",
+    title: "Preguntar a los manuales de tus proveedores",
+    summary:
+      "Subes fichas, catálogos o manuales de un proveedor y preguntas sobre esos documentos, no sobre el manual interno.",
+    body: "A veces la respuesta no está en el manual del equipo. Está en la ficha técnica, el catálogo o el manual de un proveedor.\n\nEn NotebookLM armas un cuaderno y subes esos archivos. Sirven PDF y documentos de Google Drive. La ayuda indica que el modelo usa las fuentes que cargaste para responder. Pregunta por un dato concreto, como una medida o un modo de uso, y contrasta la frase con el archivo antes de repetirla.\n\nNo subas un documento si no tienes derecho a usarlo. Esta ficha no reemplaza las dudas internas del equipo: aquí las fuentes son de un tercero.",
+    categories: ["operaciones", "equipo"],
+    tools: ["NotebookLM", "Google Drive", "PDF"],
+    difficulty: "facil",
+    sourceUrl: "https://support.google.com/notebooklm/answer/16215270",
+    isSeed: false,
+  },
+  {
+    slug: "fondo-limpio-fotos-de-producto",
+    title: "Fondo limpio para fotos de producto",
+    summary:
+      "Quitas el fondo de las fotos del catálogo en Canva, también en una carpeta de hasta 50 imágenes.",
+    body: "Las fotos de producto a veces traen la mesa, el piso u otro fondo. En el catálogo se ven distintas entre sí.\n\nCanva puede quitar ese fondo. En el editor eliges la foto y usas Quitar fondo. En Proyectos también puedes aplicarlo a una carpeta: la ayuda dice que una carpeta con más de 50 imágenes no ofrece esa opción. Al terminar, Canva deja las fotos originales y crea una carpeta con el resultado.\n\nLa función está en planes de pago. La ayuda indica que se puede probar una vez sin pagar. Mira el recorte antes de publicar. Si Canva no distingue el producto, esa foto puede quedar sin cambio.\n\nEsto no cambia el precio ni la descripción. Solo la imagen.",
+    categories: ["marketing"],
+    tools: ["Canva"],
+    difficulty: "facil",
+    sourceUrl: "https://www.canva.com/help/background-remover/",
+    isSeed: false,
+  },
+  {
+    slug: "resumir-respuestas-abiertas",
+    title: "Resumir las respuestas abiertas de una encuesta",
+    summary:
+      "Gemini resume las respuestas de texto de un formulario cuando hay entre 3 y 200, y puede agrupar temas en una hoja.",
+    body: "Las preguntas abiertas de una encuesta dejan muchas frases. Leerlas una por una retrasa ver de qué hablan los clientes.\n\nEn Google Forms, Gemini resume esas respuestas de texto cuando hay entre 3 y 200. No arma ese resumen si el formulario está marcado como cuestionario. Desde el resumen puedes agrupar temas y abrirlos en Google Sheets.\n\nHace falta un plan elegible de Google Workspace o de Google AI. La ayuda indica que, por ahora, la función está en la computadora y en inglés. El resumen no queda guardado solo: cópialo si lo quieres conservar.\n\nNo trates el texto generado como un dato que la encuesta no trae.",
+    categories: ["atencion", "marketing"],
+    tools: ["Google Forms", "Google Sheets"],
+    difficulty: "medio",
+    sourceUrl: "https://support.google.com/docs/answer/16231981",
+    isSeed: false,
   },
 ];

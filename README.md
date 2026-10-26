@@ -1,6 +1,6 @@
 # Casos IA
 
-Directorio en español de usos de inteligencia artificial para negocios. Cada ficha describe un problema, las herramientas y la dificultad. El contenido inicial es de ejemplo: no son casos de clientes y no trae métricas.
+Directorio en español de usos de inteligencia artificial para negocios. Cada ficha describe un problema, las herramientas y la dificultad. Las fichas de ejemplo inicial no son casos de clientes y no traen métricas. Si una ficha tiene fuente, el enlace lleva a la ayuda oficial.
 
 Hecho con Next.js (App Router), TypeScript y Tailwind. Pensado para desplegar en Vercel, con Supabase, Resend y Stripe.
 
@@ -20,7 +20,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Abre http://localhost:3000. Sin variables, verás las fichas de ejemplo que viven en `src/data/use-cases.ts`.
+Abre http://localhost:3000. Sin variables, verás el directorio de `src/data/use-cases.ts`.
 
 ```bash
 npm test

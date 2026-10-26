@@ -89,7 +89,12 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
           <div className="sm:col-span-2">
             <dt className="field-label">Fuente</dt>
             <dd className="mt-1">
-              <a href={item.sourceUrl} className="link font-normal" rel="nofollow noopener noreferrer">
+              <a
+                href={item.sourceUrl}
+                className="link font-normal break-all"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+              >
                 {item.sourceUrl}
               </a>
             </dd>
