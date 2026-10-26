@@ -110,8 +110,8 @@ export function UseCaseExplorer({ cases }: { cases: UseCase[] }) {
           ) : (
             <ol>
               {filtered.map((item) => (
-                <li key={item.slug}>
-                  <Link href={`/casos/${item.slug}`} className="entry">
+                <li key={item.slug} className="entry">
+                  <Link href={`/casos/${item.slug}`} className="block">
                     <span className="entry-title">{item.title}</span>
                     <span className="mt-0.5 block text-sm leading-5 text-muted">{item.summary}</span>
                     <span className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[13px] leading-5 text-muted">
@@ -121,6 +121,16 @@ export function UseCaseExplorer({ cases }: { cases: UseCase[] }) {
                       <span>{item.tools.join(", ")}</span>
                     </span>
                   </Link>
+                  {item.sourceUrl ? (
+                    <a
+                      href={item.sourceUrl}
+                      className="link mt-1 inline-block text-[13px] font-normal"
+                      target="_blank"
+                      rel="nofollow noopener noreferrer"
+                    >
+                      Fuente
+                    </a>
+                  ) : null}
                 </li>
               ))}
             </ol>

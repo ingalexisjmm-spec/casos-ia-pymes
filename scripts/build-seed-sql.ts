@@ -10,12 +10,16 @@ function textArray(values: readonly string[]): string {
   return `array[${values.map((value) => quote(value)).join(", ")}]::text[]`;
 }
 
+function sqlText(value: string | null): string {
+  return value === null ? "null" : quote(value);
+}
+
 const rows = seedUseCases.map((item) => {
-  return `  (${quote(item.slug)}, ${quote(item.title)}, ${quote(item.summary)}, ${quote(item.body)}, ${textArray(item.categories)}, ${textArray(item.tools)}, ${quote(item.difficulty)}, null, true)`;
+  return `  (${quote(item.slug)}, ${quote(item.title)}, ${quote(item.summary)}, ${quote(item.body)}, ${textArray(item.categories)}, ${textArray(item.tools)}, ${quote(item.difficulty)}, ${sqlText(item.sourceUrl)}, ${item.isSeed ? "true" : "false"})`;
 });
 
-const sql = `-- Contenido inicial de ejemplo.
--- No son casos de clientes ni resultados medidos.
+const sql = `-- Directorio del proyecto.
+-- is_seed = true marca un ejemplo inicial, no un caso de un cliente.
 -- Se genera desde src/data/use-cases.ts con: npm run db:seed-sql
 
 insert into public.use_cases (

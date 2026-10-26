@@ -68,7 +68,7 @@ function Notice({
   if (notice === "local-examples") {
     return (
       <p className="note">
-        Estás viendo los ejemplos iniciales del proyecto. No son casos de un cliente. Al conectar Supabase, el directorio lee la tabla de fichas.
+        Estás viendo el directorio guardado en el proyecto. Las fichas marcadas como ejemplo inicial no son casos de un cliente. Al conectar Supabase, el directorio lee la tabla de fichas.
       </p>
     );
   }
