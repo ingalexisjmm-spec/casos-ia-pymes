@@ -1,0 +1,273 @@
+import type { UseCase } from "../lib/types";
+
+/**
+ * Contenido inicial de ejemplo.
+ * No son casos de un cliente ni resultados medidos.
+ * La misma lista se vuelca a supabase/seed.sql.
+ */
+export const seedUseCases: UseCase[] = [
+  {
+    slug: "whatsapp-fuera-de-horario",
+    title: "Responder WhatsApp cuando el equipo no está",
+    summary:
+      "Un asistente contesta precio, horario y disponibilidad con un documento que tú escribes, y deja lo demás para una persona.",
+    body: "Muchos negocios reciben las mismas preguntas por WhatsApp fuera del horario: cuánto cuesta, dónde están y si queda producto.\n\nEl asistente solo responde con lo que está escrito en una ficha breve: productos, precios, plazos y lo que no se puede prometer. Si la pregunta no está ahí, dice que alguien del equipo responde al día siguiente.\n\nEmpieza con diez preguntas reales copiadas del chat. Escríbelas con la respuesta que darías tú. Conecta ese texto a WhatsApp Business con la herramienta de bandeja o de automatización que ya uses.\n\nRevisa las conversaciones los primeros días. El asistente no debe inventar descuentos, plazos ni stock.",
+    categories: ["atencion", "ventas"],
+    tools: ["WhatsApp Business", "Documento de preguntas", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "borrador-de-cotizacion",
+    title: "Borrador de cotización a partir de una conversación",
+    summary:
+      "Pegas las notas de una llamada y obtienes un borrador de cotización con alcance, precio y lo que queda fuera.",
+    body: "Armar una cotización desde cero después de cada llamada consume la tarde. Casi siempre repites la misma estructura.\n\nCon las notas de la conversación, el asistente propone un borrador: qué incluye, qué no incluye, plazo y precio según tu tabla. Tú corriges números y condiciones antes de enviarlo.\n\nPrepara una tabla simple de precios y dos cotizaciones antiguas que te gusten, como ejemplo de tono. Pide el borrador en el mismo formato cada vez.\n\nNo envíes la primera versión sin leerla. Un cero de más en el precio no lo va a detectar solo.",
+    categories: ["ventas"],
+    tools: ["Correo", "Hoja de precios", "ChatGPT"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "resumen-semanal-de-ventas",
+    title: "Resumen semanal de ventas desde una hoja",
+    summary:
+      "Exportas la semana a una hoja de cálculo y recibes un texto corto: qué se vendió, qué quedó quieto y qué revisar.",
+    body: "El dueño o la persona de ventas abre la hoja y no siempre tiene tiempo de contar la historia de la semana.\n\nEl asistente lee las filas que ya exportaste y escribe un resumen: total, productos o servicios que más salieron, y los que no se movieron. No inventa causas. Si un dato no está en la hoja, lo dice.\n\nUsa siempre las mismas columnas: fecha, producto, cantidad e importe. Pega la hoja o súbela y pide el mismo formato de cinco líneas.\n\nSirve para la reunión del lunes. No reemplaza el cierre contable.",
+    categories: ["ventas", "finanzas"],
+    tools: ["Google Sheets", "Excel", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "descripciones-de-producto",
+    title: "Descripciones de producto para la tienda",
+    summary:
+      "A partir de una ficha técnica corta, redacta la descripción de la tienda en el tono del negocio y en el idioma que vendes.",
+    body: "Subir productos nuevos se atasca en el texto. La ficha del proveedor viene seca o en otro idioma.\n\nEl asistente reescribe con los datos que le das: material, medida, uso y cuidado. Mantiene lo que no se puede cambiar, como una talla o una advertencia.\n\nArma una fila por producto en una hoja: nombre y cuatro datos. Pide párrafos cortos, sin adjetivos vacíos. Copia el resultado a Shopify, WooCommerce o al catálogo que uses.\n\nUna persona tiene que confirmar medidas y advertencias antes de publicar.",
+    categories: ["marketing"],
+    tools: ["Hoja de catálogo", "Shopify", "WooCommerce"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "calendario-de-publicaciones",
+    title: "Calendario de publicaciones a partir del catálogo",
+    summary:
+      "Propone un mes de ideas para redes usando los productos o servicios que ya vendes, no tendencias genéricas.",
+    body: "Publicar se vuelve repetir “estamos abiertos” porque no hay un plan. El catálogo, en cambio, ya tiene temas.\n\nCon la lista de lo que vendes, el asistente arma un calendario de cuatro semanas: una idea, un formato (foto, carrusel o texto) y una frase de apertura. Tú eliges qué sí vas a hacer.\n\nPasa el catálogo y las reglas de tu marca: cómo hablas, qué no dices y en qué redes estás. Pide menos piezas de las que crees que puedes grabar.\n\nNo publiques una promo que el asistente inventó. Si no está en tu lista de precios, no existe.",
+    categories: ["marketing"],
+    tools: ["Instagram", "Hoja de catálogo", "Canva"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "respuestas-a-resenas",
+    title: "Borradores para responder reseñas públicas",
+    summary:
+      "Redacta una respuesta breve y educada a reseñas de tu ficha, para que alguien del equipo la revise y la publique.",
+    body: "Las reseñas quedan sin respuesta porque nadie quiere escribir en caliente, sobre todo cuando son malas.\n\nEl asistente propone una respuesta corta: agradece, reconoce el hecho si está claro y dice el siguiente paso. No discute ni ofrece descuentos que no autorizaste.\n\nDefine tres reglas: no pedir que quiten la reseña, no culpar al cliente y no dar datos privados. Pega el texto de la reseña y elige el borrador antes de publicarlo en Google o en la tienda.\n\nSi la reseña habla de un daño o de un cobro, que la conteste una persona.",
+    categories: ["marketing", "atencion"],
+    tools: ["Google Business Profile", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "clasificar-correos-de-clientes",
+    title: "Clasificar correos de clientes por urgencia",
+    summary:
+      "Ordena la bandeja en urgente, esta semana y archivo, con una línea que dice por qué.",
+    body: "La bandeja mezcla cotizaciones, quejas, facturas y boletines. Lo urgente se esconde.\n\nEl asistente lee el asunto y el cuerpo, y propone una etiqueta: responder hoy, responder esta semana o no es de un cliente. Agrega una frase con el motivo.\n\nEmpieza con Gmail o el correo que ya usas. Revisa veinte mensajes etiquetados a mano para ver si las reglas coinciden con tu criterio. Ajusta ejemplos: “sin agua en el local” es urgente; “catálogo nuevo” no lo es.\n\nNo dejes que borre correos. Solo clasifica.",
+    categories: ["atencion", "operaciones"],
+    tools: ["Gmail", "Outlook", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "preguntas-frecuentes-del-negocio",
+    title: "Una base de preguntas frecuentes del negocio",
+    summary:
+      "Juntas las respuestas oficiales en un solo lugar para que el equipo y un asistente digan lo mismo.",
+    body: "Cada persona del equipo responde distinto: un plazo, un precio, una política de cambios.\n\nEl trabajo es escribir esas respuestas una vez. El asistente ayuda a pasar chats y correos viejos a una lista corta, sin quedarse con lo que ya no vale.\n\nElige un documento compartido. Pon fecha a cada respuesta. Cuando cambie un precio, cambia el documento antes de cambiar el asistente.\n\nEsta ficha es el cimiento de las otras. Sin ese texto, el resto inventa.",
+    categories: ["atencion", "operaciones"],
+    tools: ["Google Docs", "Notion", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "seguimiento-despues-de-la-compra",
+    title: "Seguimiento unos días después de la compra",
+    summary:
+      "Prepara un mensaje de seguimiento para quien ya compró o recibió un servicio, con espacio para que una persona lo envíe.",
+    body: "Después de la venta nadie escribe, y el cliente decide solo si volver o no.\n\nEl asistente arma un mensaje corto a los pocos días: pregunta si quedó bien, recuerda un cuidado del producto y ofrece un siguiente paso que tú definiste. No pide una reseña de cinco estrellas ni promete un regalo.\n\nSaca de tu hoja de pedidos el nombre, la fecha y lo que compró. Revisa el texto si el caso fue un reclamo.\n\nEnviar menos mensajes, y solo a quien sí compró, funciona mejor que una cadena genérica.",
+    categories: ["atencion", "ventas"],
+    tools: ["Hoja de pedidos", "WhatsApp Business", "Correo"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "minuta-de-reunion",
+    title: "Minuta con tareas y responsables",
+    summary:
+      "Convierte notas sueltas de una reunión en acuerdos, tareas y una fecha de revisión.",
+    body: "Las reuniones terminan y, a los dos días, nadie recuerda quién iba a hacer qué.\n\nPegas las notas o la transcripción. El asistente devuelve tres bloques: acuerdos, tareas con responsable y lo que quedó pendiente de decidir. No agrega temas que no estaban en las notas.\n\nPide que marque con “sin responsable” lo que no quedó asignado, en lugar de inventar un nombre. Envía la minuta el mismo día para que el equipo la corrija.\n\nSirve para un equipo chico. No es un acta legal.",
+    categories: ["operaciones", "equipo"],
+    tools: ["Notas", "Google Docs", "Claude"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "confirmacion-de-citas",
+    title: "Confirmación de citas por mensaje",
+    summary:
+      "Redacta el recordatorio de una cita con fecha, hora y qué debe traer la persona, a partir del calendario.",
+    body: "Las ausencias duelen cuando el servicio se agenda de a una persona: un taller, una consulta, una visita.\n\nEl asistente escribe el recordatorio con los datos de la cita y las instrucciones que ya tienes (“llega 10 minutos antes”, “trae el número de pedido”). Quien corresponda lo envía, o lo manda tu herramienta de calendario si ya la tienes conectada.\n\nLista los tipos de cita y el texto fijo de cada una. No dejes que el modelo cambie la hora: la hora sale del calendario, no de la redacción.\n\nSi alguien pide mover la cita, que lo resuelva una persona.",
+    categories: ["operaciones"],
+    tools: ["Google Calendar", "WhatsApp Business", "Correo"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "alerta-de-stock-bajo",
+    title: "Aviso cuando un producto se está acabando",
+    summary:
+      "Lee una hoja de inventario simple y lista lo que está bajo el mínimo que tú definiste.",
+    body: "El quiebre de stock se nota cuando el cliente ya preguntó. La hoja de inventario a veces sí tenía el dato.\n\nEl asistente compara existencia y mínimo, y devuelve una lista: qué reponer, cuántas unidades faltan para el mínimo y qué no se puede calcular porque la celda está vacía.\n\nMantén columnas estables: código, nombre, existencia y mínimo. Revisa la lista antes de hacer un pedido a un proveedor.\n\nNo conectes esto a una compra automática al principio. Primero tiene que fallar en voz alta, no en un pedido equivocado.",
+    categories: ["operaciones"],
+    tools: ["Google Sheets", "Excel", "ChatGPT"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "ordenar-gastos-del-mes",
+    title: "Ordenar gastos del mes para el cierre",
+    summary:
+      "Agrupa movimientos de un extracto en categorías que tú definas y marca los que no logra clasificar.",
+    body: "El cierre se alarga porque el extracto llega como una lista larga y alguien lo pasa a mano a categorías.\n\nEl asistente propone una categoría por movimiento usando tu lista (arriendo, insumos, sueldos, comisiones, otros). Separa lo que clasificó seguro de lo que tiene duda.\n\nExporta el mes en CSV o en una hoja. Incluye fecha, descripción e importe. No le pidas que “cuadre” contra la contabilidad: solo agrupa.\n\nAlguien que conozca los gastos tiene que mirar la columna de dudas antes de usar los totales.",
+    categories: ["finanzas"],
+    tools: ["Extracto bancario", "Google Sheets", "ChatGPT"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "borradores-de-cobranza",
+    title: "Borradores de cobranza con tono respetuoso",
+    summary:
+      "Escribe un mensaje de cobro según los días de atraso, sin amenazas ni promesas que no autorizaste.",
+    body: "Cobrar por mensaje se vuelve incómodo y, por eso, se posterga. El texto sale distinto según quién lo escriba.\n\nDefine tres momentos: recordatorio amable, segundo aviso y aviso de pausa del servicio. El asistente rellena nombre, número de documento, monto y fecha con los datos de tu lista. No agrega intereses si no están en la regla.\n\nParte de una hoja con facturas vencidas. Lee cada borrador. Tú decides si se envía.\n\nNo automatices el corte de un servicio sin una revisión humana.",
+    categories: ["finanzas", "ventas"],
+    tools: ["Hoja de facturas", "Correo", "WhatsApp Business"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "datos-de-facturas-en-pdf",
+    title: "Sacar datos de facturas en PDF",
+    summary:
+      "Lee facturas de proveedores y arma una tabla con emisor, fecha, número e importe para pegar en tu hoja.",
+    body: "Las facturas llegan en PDF al correo y alguien las vuelve a escribir en la hoja de gastos.\n\nEl asistente extrae emisor, fecha, número de documento, importe e impuesto si aparece. Si un campo no se lee, deja la celda vacía en lugar de adivinar.\n\nPrueba con diez facturas de proveedores distintos. Compara contra el PDF. Cuando falle un formato, guarda ese archivo como ejemplo de lo que hay que mirar a mano.\n\nEsto no sustituye al sistema contable. Solo evita el copiado inicial.",
+    categories: ["finanzas", "administracion"],
+    tools: ["PDF", "Correo", "Google Sheets"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "ingreso-de-alguien-nuevo",
+    title: "Checklist para el ingreso de alguien nuevo",
+    summary:
+      "Arma la lista de la primera semana de una persona nueva según el rol, con accesos, tareas y a quién preguntar.",
+    body: "Cuando entra alguien, el conocimiento está en la cabeza de quien ya está. La primera semana se vuelve una cadena de mensajes.\n\nEl asistente ordena un checklist a partir de un documento base: accesos, herramientas, primeras tareas y las tres personas de contacto. Puedes tener una versión para el local y otra para quien trabaja en remoto.\n\nEscribe el documento base una vez. Cada ingreso, indica el rol y la fecha de inicio para que arme la lista de esa persona.\n\nNo pongas contraseñas en el chat del asistente. Los accesos se entregan por el canal seguro que ya uses.",
+    categories: ["equipo"],
+    tools: ["Google Docs", "Notion", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "dudas-internas-del-equipo",
+    title: "Responder dudas internas del equipo",
+    summary:
+      "El equipo pregunta por horarios, descuentos y procesos, y el asistente contesta solo con el manual interno.",
+    body: "Las mismas dudas llegan por chat interno: cómo se hace un cambio, qué descuento está permitido, a qué hora cierra la caja.\n\nCargas el manual y el asistente responde con la sección de donde salió la respuesta. Si el manual no lo dice, responde “no está escrito” y no completa el hueco.\n\nMantén el manual corto y con dueño. Una persona avisa cuando una regla cambia.\n\nÚsalo dentro del equipo. No lo publiques como atención al cliente sin revisarlo.",
+    categories: ["equipo", "operaciones"],
+    tools: ["Manual interno", "Slack", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "fichas-en-otro-idioma",
+    title: "Pasar fichas de producto a otro idioma",
+    summary:
+      "Traduce fichas manteniendo medidas, nombres propios y advertencias, para un segundo mercado o para clientes que escriben en otra lengua.",
+    body: "Quieres vender en otro idioma y el catálogo solo está en uno. Traducir a mano frena la publicación.\n\nEl asistente traduce la ficha y deja intactos números, tallas, ingredientes y nombres de marca. Marca las frases que son legales o de seguridad para que un hablante nativo las mire.\n\nHaz una primera tanda de veinte fichas, no del catálogo entero. Compara con alguien que hable el idioma de tus clientes.\n\nNo publiques advertencias de uso traducidas a ciegas.",
+    categories: ["marketing"],
+    tools: ["Hoja de catálogo", "ChatGPT", "Claude"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "guion-de-visita-comercial",
+    title: "Guion breve para una visita comercial",
+    summary:
+      "Con lo que ya sabes del cliente, prepara tres preguntas, un objetivo de la visita y un siguiente paso.",
+    body: "Antes de una visita, el tiempo se va en buscar notas viejas en el correo.\n\nPegas esas notas. El asistente devuelve una página: quién es el cliente, qué quedó pendiente, tres preguntas y el siguiente paso que tú quieres proponer. No inventa una historia de la empresa.\n\nGuarda las notas de cada cuenta en el mismo lugar, aunque sea una hoja. Pide el guion el día anterior.\n\nEl guion no es un discurso para leer en voz alta. Es una lista para no olvidar lo importante.",
+    categories: ["ventas"],
+    tools: ["Notas de clientes", "Correo", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "recompra-de-pedidos-habituales",
+    title: "Detectar pedidos que se pueden repetir",
+    summary:
+      "Mira el historial de pedidos y señala clientes que suelen comprar en ciclo y todavía no reponen.",
+    body: "Algunos clientes compran el mismo insumo cada mes. Si nadie mira el historial, el pedido se va a otro proveedor.\n\nEl asistente agrupa por cliente y producto, estima el ritmo solo si hay varias compras, y lista a quién valdría escribir esta semana. Si hay una sola compra, no inventa un ciclo.\n\nNecesitas una exportación con fecha, cliente y producto. Tú escribes el mensaje. El asistente solo propone la lista.\n\nNo llames “cliente perdido” a quien compró una vez hace un año.",
+    categories: ["ventas", "operaciones"],
+    tools: ["Historial de pedidos", "Google Sheets", "ChatGPT"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "revision-de-contrato-corto",
+    title: "Primera lectura de un contrato corto",
+    summary:
+      "Lista plazos, montos, renovación y obligaciones de un contrato breve para que llegues a la revisión legal con preguntas concretas.",
+    body: "Los contratos de arriendo, de un proveedor o de un freelance se firman con prisa y después nadie encuentra la fecha de aviso.\n\nEl asistente lee el PDF y extrae: partes, vigencia, cómo se renueva, montos, y qué pasa si una parte quiere salir. Cita el número de cláusula. Si no encuentra un punto, lo dice.\n\nÚsalo para llegar mejor preparado a quien te asesora, o para armar tu propia lista de fechas. No lo uses como única lectura de un contrato grande o de algo que no entiendes.\n\nEsto no es asesoría legal. No firmes solo porque el resumen se ve ordenado.",
+    categories: ["administracion"],
+    tools: ["PDF", "Claude", "ChatGPT"],
+    difficulty: "medio",
+    sourceUrl: null,
+    isSeed: true,
+  },
+  {
+    slug: "informe-de-lo-que-ya-mediste",
+    title: "Informe de la semana con números que ya exportaste",
+    summary:
+      "Redacta un informe corto a partir de una exportación de visitas, mensajes o ventas. No calcula una campaña que no mediste.",
+    body: "Tienes una exportación de la tienda, del correo o de las redes, y nadie la convierte en un párrafo para el equipo.\n\nEl asistente describe solo lo que viene en el archivo: qué subió, qué bajó y qué dato falta. No explica el “porqué” si el archivo no lo trae. No compara contra un benchmark inventado.\n\nPide siempre la misma estructura: tres observaciones y una pregunta para la próxima semana. Guarda el archivo de origen junto al texto.\n\nSi la exportación está incompleta, el informe también lo está. El asistente no completa huecos.",
+    categories: ["marketing", "finanzas"],
+    tools: ["Exportación CSV", "Google Sheets", "ChatGPT"],
+    difficulty: "facil",
+    sourceUrl: null,
+    isSeed: true,
+  },
+];
