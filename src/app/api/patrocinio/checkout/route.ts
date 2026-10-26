@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "El pago no está configurado. Agrega STRIPE_SECRET_KEY y, si quieres, STRIPE_PRICE_ID o STRIPE_PAYMENT_LINK.",
+          "El pago no está configurado. Agrega STRIPE_SECRET_KEY o, si quieres, STRIPE_PAYMENT_LINK.",
       },
       { status: 503 },
     );

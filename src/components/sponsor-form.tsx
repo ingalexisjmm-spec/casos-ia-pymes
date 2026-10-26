@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { SPONSOR_PRICE_USD } from "@/lib/site";
+import { SPONSOR_LAUNCH_PRICE_USD } from "@/lib/site";
 
 type Status = { kind: "idle" | "loading" | "error"; text: string };
 
@@ -95,7 +95,7 @@ export function SponsorForm() {
         </label>
       </div>
       <button type="submit" disabled={status.kind === "loading"} className="btn btn-accent">
-        {status.kind === "loading" ? "Abriendo Stripe…" : `Pagar USD ${SPONSOR_PRICE_USD} con Stripe`}
+        {status.kind === "loading" ? "Abriendo Stripe…" : `Pagar USD ${SPONSOR_LAUNCH_PRICE_USD} con Stripe`}
       </button>
       {status.kind === "error" ? (
         <p role="alert" className="alert">

@@ -1,5 +1,5 @@
-import { SPONSOR_INTEGRATION_ID, SPONSOR_PRICE_USD, absoluteUrl } from "@/lib/site";
-import { getStripe, stripePaymentLink, stripePriceId } from "@/lib/stripe";
+import { SPONSOR_INTEGRATION_ID, SPONSOR_LAUNCH_PRICE_CENTS, absoluteUrl } from "@/lib/site";
+import { getStripe, stripePaymentLink } from "@/lib/stripe";
 
 export type CheckoutStart = {
   url: string;
@@ -12,7 +12,6 @@ export async function startSponsorCheckout(input: {
   name: string;
 }): Promise<CheckoutStart> {
   const stripe = getStripe();
-  const priceId = stripePriceId();
   const paymentLink = stripePaymentLink();
 
   if (stripe) {
@@ -30,19 +29,17 @@ export async function startSponsorCheckout(input: {
           sponsor_name: input.name.slice(0, 200),
         },
         line_items: [
-          priceId
-            ? { price: priceId, quantity: 1 }
-            : {
-                quantity: 1,
-                price_data: {
-                  currency: "usd",
-                  unit_amount: SPONSOR_PRICE_USD * 100,
-                  product_data: {
-                    name: "Patrocinio Casos IA",
-                    description: "Ficha en el directorio y mención en un envío del boletín.",
-                  },
-                },
+          {
+            quantity: 1,
+            price_data: {
+              currency: "usd",
+              unit_amount: SPONSOR_LAUNCH_PRICE_CENTS,
+              product_data: {
+                name: "Patrocinio Casos IA",
+                description: "Precio de lanzamiento. Ficha en el directorio y mención en un envío del boletín.",
               },
+            },
+          },
         ],
       },
       { idempotencyKey: `sponsor-checkout/${input.sponsorId}` },

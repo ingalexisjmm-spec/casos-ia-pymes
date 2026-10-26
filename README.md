@@ -43,11 +43,11 @@ Copia `.env.example` a `.env.local`. No subas `.env.local` ni claves reales.
 | `RESEND_FROM_EMAIL` | Remitente, por ejemplo `Casos IA <hola@tudominio.com>` | Los mismos correos |
 | `STRIPE_SECRET_KEY` | Checkout. Puede ser una clave restringida `rk_` | Cobrar el patrocinio |
 | `CASOS_SK_1`, `CASOS_SK_2` | Partes de la clave de Stripe si el valor completo se trunca. Se concatenan sin separador y tienen prioridad | Alternativa de la clave anterior |
-| `STRIPE_PRICE_ID` | Precio único de USD 500 | Recomendado |
-| `STRIPE_PAYMENT_LINK` | Alternativa si no creas la sesión desde el servidor | Alternativa de cobro |
+| `STRIPE_PRICE_ID` | No entra en el Checkout de lanzamiento. Un Price de USD 500 que ya exista no se cobra | No |
+| `STRIPE_PAYMENT_LINK` | Alternativa si no creas la sesión desde el servidor. Tiene que ser USD 149 | Alternativa de cobro |
 | `STRIPE_WEBHOOK_SECRET` | Verificar `checkout.session.*` | Publicar la ficha tras el pago |
 
-Si hay `STRIPE_SECRET_KEY` y no hay `STRIPE_PRICE_ID`, el servidor crea la sesión con un importe de USD 500. El texto del sitio dice ese precio: el precio en Stripe tiene que coincidir.
+Con `STRIPE_SECRET_KEY`, el servidor crea la sesión con un importe de USD 149 (14900 centavos), aunque `STRIPE_PRICE_ID` esté definido. La página muestra además el precio de lista de USD 500 como referencia. Ese importe no se cobra.
 
 `SUPABASE_SERVICE_ROLE_KEY` no lleva prefijo `NEXT_PUBLIC_`. Si se filtra, da acceso de escritura a la base.
 
@@ -88,13 +88,11 @@ El alta guarda el correo aunque el envío falle, y la respuesta lo dice. La bien
 
 ## Stripe
 
-El patrocinio es un pago único de USD 500: ficha en el directorio y mención en un envío del boletín. No promete visitas ni ventas.
+El patrocinio que se cobra es un pago único de USD 149 (14900 centavos), el precio de lanzamiento: ficha en el directorio y mención en un envío del boletín. No promete visitas ni ventas. El precio de lista para sponsors internacionales es USD 500. La página lo muestra como referencia y no es un precio de Stripe.
 
-1. Crea un producto de pago único, “Patrocinio Casos IA”, por USD 500.
-2. Copia el `price_...` a `STRIPE_PRICE_ID`.
-3. Para cobrar, usa una clave restringida (`rk_`) con permiso de escritura en Checkout Sessions, en lugar de la clave secreta completa, si tu cuenta ya lo permite. La variable sigue llamándose `STRIPE_SECRET_KEY`.
-4. En local o en un sandbox, usa claves de prueba (`rk_test_` o `sk_test_`). El sitio avisa cuando detecta ese prefijo.
-5. Si prefieres no crear la sesión desde el código, crea un Payment Link y pon la URL en `STRIPE_PAYMENT_LINK`.
+1. Para cobrar, usa una clave restringida (`rk_`) con permiso de escritura en Checkout Sessions, en lugar de la clave secreta completa, si tu cuenta ya lo permite. La variable sigue llamándose `STRIPE_SECRET_KEY`.
+2. En local o en un sandbox, usa claves de prueba (`rk_test_` o `sk_test_`). El sitio avisa cuando detecta ese prefijo.
+3. Si prefieres no crear la sesión desde el código, crea un Payment Link de USD 149 (no de USD 500) y pon la URL en `STRIPE_PAYMENT_LINK`.
 
 El webhook no es un extra. Sin él, una persona puede pagar y la ficha no se publica, porque la página de retorno no marca el pago.
 

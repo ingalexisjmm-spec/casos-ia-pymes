@@ -2,7 +2,7 @@ import "server-only";
 
 import { Resend } from "resend";
 
-import { absoluteUrl, SITE_NAME } from "@/lib/site";
+import { absoluteUrl, SITE_NAME, SPONSOR_LAUNCH_PRICE_USD } from "@/lib/site";
 
 export function resendClient(): Resend | null {
   const key = process.env.RESEND_API_KEY?.trim();
@@ -69,14 +69,14 @@ export async function sendSponsorReceipt(
   const text = [
     `Hola ${name},`,
     "",
-    "Confirmamos el pago del patrocinio en Casos IA (USD 500).",
+    `Confirmamos el pago del patrocinio en Casos IA (precio de lanzamiento, USD ${SPONSOR_LAUNCH_PRICE_USD}).`,
     "El espacio incluye una ficha en el directorio y una mención en un envío del boletín.",
     "Publicamos la ficha cuando este pago queda registrado. Si el texto necesita un ajuste, responde a este correo.",
   ].join("\n");
 
   const html = `
     <p>Hola ${escapeHtml(name)},</p>
-    <p>Confirmamos el pago del patrocinio en Casos IA (USD 500).</p>
+    <p>Confirmamos el pago del patrocinio en Casos IA (precio de lanzamiento, USD ${SPONSOR_LAUNCH_PRICE_USD}).</p>
     <p>El espacio incluye una ficha en el directorio y una mención en un envío del boletín.</p>
     <p>Publicamos la ficha cuando este pago queda registrado. Si el texto necesita un ajuste, responde a este correo.</p>
   `.trim();

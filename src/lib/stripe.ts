@@ -17,6 +17,10 @@ export function getStripe(): Stripe | null {
   return client;
 }
 
+/**
+ * Queda en el entorno por un Price anterior. El Checkout de lanzamiento no lo envía:
+ * el cobro es `SPONSOR_LAUNCH_PRICE_CENTS` (14900), para no cobrar el precio de lista.
+ */
 export function stripePriceId(): string {
   return process.env.STRIPE_PRICE_ID?.trim() ?? "";
 }
