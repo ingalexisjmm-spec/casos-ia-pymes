@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { SponsorForm } from "@/components/sponsor-form";
-import { SPONSOR_PRICE_USD } from "@/lib/site";
+import { SPONSOR_LAUNCH_PRICE_USD, SPONSOR_LIST_PRICE_USD } from "@/lib/site";
 import { stripeKeyMode } from "@/lib/stripe";
 
 export const metadata: Metadata = {
   title: "Patrocinio",
-  description: `Espacio de patrocinio en Casos IA: ficha en el directorio y mención en el boletín, por USD ${SPONSOR_PRICE_USD}.`,
+  description: `Ficha en el directorio y mención en el boletín. Precio de lanzamiento: USD ${SPONSOR_LAUNCH_PRICE_USD}, pago único. Precio de lista: USD ${SPONSOR_LIST_PRICE_USD}.`,
   alternates: { canonical: "/patrocinio" },
 };
 
@@ -23,12 +23,27 @@ export default function PatrocinioPage({
       <div>
         <h1>Un espacio en el directorio</h1>
         <p className="lede">
-          Para quien tiene un producto útil para negocios que están viendo cómo usar IA. El precio publicado es USD {SPONSOR_PRICE_USD}, pago único.
+          Para quien tiene un producto útil para negocios que están viendo cómo usar IA.
         </p>
-        <ul className="mt-6 max-w-xl space-y-3 text-sm leading-6">
-          <li className="border-t border-line pt-3">Ficha con tu nombre, un enlace y una frase.</li>
-          <li className="border-t border-line pt-3">Mención en un envío del boletín.</li>
-          <li className="border-t border-line pt-3">
+        <ul className="mt-6 max-w-xl text-sm leading-6">
+          <li className="border-t border-line py-3">
+            <p>
+              <span className="font-semibold">Precio de lanzamiento: </span>
+              <span className="nums font-semibold">USD {SPONSOR_LAUNCH_PRICE_USD}</span>
+              <span className="font-semibold">, pago único</span>
+            </p>
+            <p className="mt-1 text-muted">Es lo que se paga ahora.</p>
+          </li>
+          <li className="border-t border-line py-3">
+            <p>
+              <span className="font-semibold">Precio de lista / sponsors internacionales: </span>
+              <span className="nums">USD {SPONSOR_LIST_PRICE_USD}</span>
+            </p>
+            <p className="mt-1 text-muted">Referencia. Todavía no se cobra como un precio aparte.</p>
+          </li>
+          <li className="border-t border-line py-3">Ficha con tu nombre, un enlace y una frase.</li>
+          <li className="border-t border-line py-3">Mención en un envío del boletín.</li>
+          <li className="border-t border-line py-3">
             No incluye una cantidad prometida de visitas, clics o ventas.
           </li>
         </ul>

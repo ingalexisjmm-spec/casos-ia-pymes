@@ -31,6 +31,10 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     "src/data/use-cases.ts",
     "src/app/page.tsx",
     "src/app/layout.tsx",
+    "src/app/patrocinio/page.tsx",
+    "src/components/sponsor-form.tsx",
+    "src/lib/email.ts",
+    "src/lib/site.ts",
     "README.md",
     "supabase/migrations/20261026005217_init_directory.sql",
   ];
