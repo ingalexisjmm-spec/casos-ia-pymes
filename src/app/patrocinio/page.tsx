@@ -18,14 +18,13 @@ export default function PatrocinioPage({
   const mode = stripeKeyMode();
 
   return (
-    <div className="prose-width grid gap-12 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:py-16">
+    <div className="shell grid gap-10 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
       <div>
-        <p className="label">patrocinio · usd {SPONSOR_PRICE_USD}</p>
-        <h1 className="mt-4">Un espacio en el directorio</h1>
+        <h1>Un espacio en el directorio</h1>
         <p className="lede">
           Para quien tiene un producto útil para negocios que están viendo cómo usar IA. El precio publicado es USD {SPONSOR_PRICE_USD}, pago único.
         </p>
-        <ul className="mt-8 max-w-xl space-y-3 text-[0.98rem] leading-6">
+        <ul className="mt-6 max-w-xl space-y-3 text-sm leading-6">
           <li className="border-t border-line pt-3">Ficha con tu nombre, un enlace y una frase.</li>
           <li className="border-t border-line pt-3">Mención en un envío del boletín.</li>
           <li className="border-t border-line pt-3">

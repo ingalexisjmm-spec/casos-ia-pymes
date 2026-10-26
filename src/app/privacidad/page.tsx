@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacidadPage() {
   return (
-    <article className="reading prose-width py-14">
+    <article className="reading shell py-10">
       <h1>Privacidad</h1>
       <div className="mt-8">
         <p>

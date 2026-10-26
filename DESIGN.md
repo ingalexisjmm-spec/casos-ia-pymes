@@ -1,27 +1,34 @@
 # Aspecto de Casos IA
 
-Superficie de consulta: se busca, se filtra y se lee. El hero explica el directorio. No es una portada cinematográfica.
+Catálogo de consulta para negocios en América Latina. Se busca, se filtra y se lee una ficha. La densidad es la de un índice (Are.na, docs de Stripe, listas de Linear), no la de una portada.
 
-## Cuatro principios
+Variación alta en la composición, movimiento mínimo, densidad alta.
 
-1. Catálogo primero. El texto y los filtros mandan.
-2. Un mundo solo: papel, tinta, oliva y arcilla.
-3. Una familia tipográfica, más una mono para rótulos.
-4. Scroll del navegador. Sin video, sin cursor animado y sin sonido.
+## Decisiones
+
+1. Una sans para todo el texto. Outfit, cargada con `next/font`. No hay mono de adorno: no hay códigos en la interfaz. Los conteos y el precio usan cifras tabulares de la misma familia.
+2. Superficie fría, tinta casi negra y un solo acento: `#246BFF`.
+3. Jerarquía por tamaño y peso. Sin cejas sobre los títulos, sin números de sección, sin grano y sin viñeta.
+4. Filtros como controles de texto. Las fichas se separan con una línea. Una tarjeta solo aparece si ayuda a separar un bloque, como el formulario de pago.
+5. Scroll del navegador. Sin video, sin WebGL y sin cursor animado.
 
 ## Sistema
 
 | Pieza | Elección |
 | --- | --- |
-| Texto | Fraunces, en títulos y en cuerpo |
-| Rótulos | IBM Plex Mono, en minúscula |
-| Papel | `#f3efe6` |
-| Tinta | `#1a1814` |
-| Oliva | `#1e5640`, enlaces, foco y el botón principal |
-| Arcilla | `#8c4632`, solo errores y la marca de ejemplo |
+| Texto | Outfit 400, 500, 600 y 700 |
+| Superficie | `#f4f6f8` |
+| Tinta | `#101318` |
+| Campo | `#ffffff` |
+| Acento | `#246BFF` en botones, foco y la raya del filtro activo |
+| Acento en texto | `#1558e8`, el mismo azul más oscuro para que un enlace pequeño se lea sobre la superficie |
+| Texto secundario | `#5c6570` |
+| Líneas | `#dfe3e8` |
 
-Las líneas, el texto secundario y los avisos salen de esas tintas, no de colores nuevos. Hay un grano fijo al 4,5 % y una viñeta muy suave. Con “reducir movimiento” desaparecen.
+El título de página va en 28–36 px y 700. La sección, en 18 px y 650. La ficha, en 15 px y 650. El cuerpo, en 15 px.
+
+Un error de formulario se marca con peso, no con un segundo color de marca.
 
 ## Qué no entra
 
-Scroll secuestrado, WebGL, recorrido de cámara, precargadores y sonido. Esos patrones son de otra superficie.
+Serifas de display, paleta de papel y oliva, metadatos unidos con punto medio, rayas de puntuación largas, grillas de tarjetas iguales, brillo, cristal y texto en degradado. Tampoco scroll secuestrado, video de recorrido ni sonido.

@@ -37,8 +37,8 @@ export function NewsletterForm({ source }: { source: string }) {
 
   return (
     <form onSubmit={onSubmit} className="relative grid gap-2">
-      <label htmlFor={`email-${source}`} className="label">
-        correo
+      <label htmlFor={`email-${source}`} className="field-label">
+        Correo
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
@@ -51,7 +51,7 @@ export function NewsletterForm({ source }: { source: string }) {
           placeholder="tu@correo.com"
           className="field"
         />
-        <button type="submit" disabled={status.kind === "loading"} className="btn btn-ink">
+        <button type="submit" disabled={status.kind === "loading"} className="btn btn-accent">
           {status.kind === "loading" ? "Enviando…" : "Quiero recibirlas"}
         </button>
       </div>
@@ -62,7 +62,7 @@ export function NewsletterForm({ source }: { source: string }) {
         </label>
       </div>
       {status.text ? (
-        <p role="status" className={status.kind === "error" ? "text-sm text-clay" : "text-sm text-pine-ink"}>
+        <p role="status" className={status.kind === "error" ? "alert" : "text-sm text-accent-ink"}>
           {status.text}
         </p>
       ) : (

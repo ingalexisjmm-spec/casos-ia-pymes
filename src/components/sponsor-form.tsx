@@ -39,16 +39,16 @@ export function SponsorForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="plate relative">
+    <form onSubmit={onSubmit} className="relative grid gap-4 border border-line bg-card p-4 sm:p-5">
       <div>
-        <label htmlFor="sponsor-name" className="label">
-          nombre del negocio o producto
+        <label htmlFor="sponsor-name" className="field-label">
+          Nombre del negocio o producto
         </label>
-        <input id="sponsor-name" name="name" required maxLength={80} autoComplete="organization" className="field mt-2" />
+        <input id="sponsor-name" name="name" required maxLength={80} autoComplete="organization" className="field mt-1.5" />
       </div>
       <div>
-        <label htmlFor="sponsor-email" className="label">
-          correo
+        <label htmlFor="sponsor-email" className="field-label">
+          Correo
         </label>
         <input
           id="sponsor-email"
@@ -57,12 +57,12 @@ export function SponsorForm() {
           required
           autoComplete="email"
           maxLength={254}
-          className="field mt-2"
+          className="field mt-1.5"
         />
       </div>
       <div>
-        <label htmlFor="sponsor-website" className="label">
-          sitio web <span className="font-normal">(opcional)</span>
+        <label htmlFor="sponsor-website" className="field-label">
+          Sitio web <span className="font-normal text-muted">(opcional)</span>
         </label>
         <input
           id="sponsor-website"
@@ -71,12 +71,12 @@ export function SponsorForm() {
           inputMode="url"
           placeholder="https://"
           maxLength={300}
-          className="field mt-2"
+          className="field mt-1.5"
         />
       </div>
       <div>
-        <label htmlFor="sponsor-blurb" className="label">
-          frase para la ficha
+        <label htmlFor="sponsor-blurb" className="field-label">
+          Frase para la ficha
         </label>
         <textarea
           id="sponsor-blurb"
@@ -85,7 +85,7 @@ export function SponsorForm() {
           maxLength={160}
           rows={3}
           placeholder="Una línea sobre qué haces. Máximo 160 caracteres."
-          className="field mt-2"
+          className="field mt-1.5"
         />
       </div>
       <div className="absolute h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -94,15 +94,11 @@ export function SponsorForm() {
           <input name="company_website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <button
-        type="submit"
-        disabled={status.kind === "loading"}
-        className="btn btn-olive"
-      >
+      <button type="submit" disabled={status.kind === "loading"} className="btn btn-accent">
         {status.kind === "loading" ? "Abriendo Stripe…" : `Pagar USD ${SPONSOR_PRICE_USD} con Stripe`}
       </button>
       {status.kind === "error" ? (
-        <p role="alert" className="text-sm text-clay">
+        <p role="alert" className="alert">
           {status.text}
         </p>
       ) : (

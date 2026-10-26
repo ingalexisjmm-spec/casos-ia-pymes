@@ -4,7 +4,7 @@ Directorio en español de usos de inteligencia artificial para negocios. Cada fi
 
 Hecho con Next.js (App Router), TypeScript y Tailwind. Pensado para desplegar en Vercel, con Supabase, Resend y Stripe.
 
-El aspecto es un catálogo en papel y tinta: una familia tipográfica, cuatro colores y rótulos en mono. El detalle está en `DESIGN.md`. El scroll es el del navegador.
+El aspecto es un catálogo denso en sans: tinta casi negra, superficie fría y un solo acento azul (`#246BFF`). El detalle está en `DESIGN.md`. El scroll es el del navegador.
 
 ## Requisitos
 

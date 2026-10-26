@@ -36,7 +36,7 @@ export async function generateMetadata({
 
 export default function CasoPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
-    <Suspense fallback={<p className="prose-width py-16 text-muted">Cargando ficha…</p>}>
+    <Suspense fallback={<p className="shell py-16 text-muted">Cargando ficha…</p>}>
       <CasoBody params={params} />
     </Suspense>
   );
@@ -49,7 +49,7 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
   const related = await getRelatedCases(item);
 
   return (
-    <article className="prose-width py-14 sm:py-16">
+    <article className="shell py-10">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -61,18 +61,12 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
           isPartOf: { "@type": "WebSite", name: "Casos IA", url: absoluteUrl("/") },
         }}
       />
-      <p className="label">
-        <Link href="/" className="hover:text-pine">
-          directorio
-        </Link>
+      <h1 className="max-w-3xl">{item.title}</h1>
+      <p className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
+        <span>{item.categories.map((id) => categoryLabel(id)).join(", ")}</span>
+        <span>{difficultyLabel(item.difficulty)}</span>
+        {item.isSeed ? <span>Ejemplo inicial</span> : null}
       </p>
-      <p className="label mt-8">
-        {item.categories.map((id) => categoryLabel(id)).join(" · ")}
-        {" · "}
-        {difficultyLabel(item.difficulty)}
-        {item.isSeed ? " · ejemplo inicial" : ""}
-      </p>
-      <h1 className="mt-3 max-w-3xl">{item.title}</h1>
       <p className="lede">{item.summary}</p>
       {item.isSeed ? (
         <p className="note">
@@ -82,20 +76,20 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
       <div className="reading mt-8">
         <Prose text={item.body} />
       </div>
-      <dl className="mt-10 grid max-w-2xl gap-6 border-t border-line pt-6 text-[0.95rem] sm:grid-cols-2">
+      <dl className="mt-8 grid max-w-2xl gap-5 border-t border-line pt-5 text-sm sm:grid-cols-2">
         <div>
-          <dt className="label">herramientas</dt>
+          <dt className="field-label">Herramientas</dt>
           <dd className="mt-1">{item.tools.join(", ")}</dd>
         </div>
         <div>
-          <dt className="label">dificultad</dt>
+          <dt className="field-label">Dificultad</dt>
           <dd className="mt-1">{difficultyLabel(item.difficulty)}</dd>
         </div>
         {item.sourceUrl ? (
           <div className="sm:col-span-2">
-            <dt className="label">fuente</dt>
+            <dt className="field-label">Fuente</dt>
             <dd className="mt-1">
-              <a href={item.sourceUrl} className="underline hover:text-pine" rel="nofollow noopener noreferrer">
+              <a href={item.sourceUrl} className="link font-normal" rel="nofollow noopener noreferrer">
                 {item.sourceUrl}
               </a>
             </dd>
@@ -108,7 +102,7 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {related.map((candidate) => (
               <li key={candidate.slug}>
-                <Link href={`/casos/${candidate.slug}`} className="block py-3 hover:text-pine">
+                <Link href={`/casos/${candidate.slug}`} className="block py-2.5 text-sm font-semibold hover:text-accent-ink">
                   {candidate.title}
                 </Link>
               </li>

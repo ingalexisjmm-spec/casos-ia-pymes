@@ -25,16 +25,12 @@ export function UnsubscribeForm({ token }: { token: string }) {
   }
 
   if (!token) {
-    return <p className="mt-6 text-sm text-clay">Falta el enlace de baja. Ábrelo desde el correo.</p>;
+    return <p className="alert mt-6">Falta el enlace de baja. Ábrelo desde el correo.</p>;
   }
 
   return (
     <form onSubmit={onSubmit} className="mt-6">
-      <button
-        type="submit"
-        disabled={pending}
-        className="btn btn-ink"
-      >
+      <button type="submit" disabled={pending} className="btn btn-accent">
         {pending ? "Actualizando…" : "Confirmar baja"}
       </button>
       {message ? (

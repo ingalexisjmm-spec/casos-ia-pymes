@@ -30,14 +30,13 @@ export default async function HomePage() {
           },
         }}
       />
-      <section className="prose-width pt-14 pb-10 sm:pt-20">
-        <p className="label">directorio · {catalog.cases.length} fichas</p>
-        <h1 className="mt-4 max-w-3xl">Usos de IA para negocios</h1>
+      <section className="shell pt-8 pb-2 sm:pt-10">
+        <h1 className="max-w-3xl">Usos de IA para negocios</h1>
         <p className="lede">
           Ideas concretas para emprendedores y equipos. Cada ficha dice qué problema resuelve, qué herramientas usa y qué tan difícil es empezar.
         </p>
-        <p className="mt-5">
-          <a href="#boletin" className="font-medium text-pine underline decoration-line underline-offset-4">
+        <p className="mt-3">
+          <a href="#boletin" className="link">
             Recibir notas cortas por correo
           </a>
         </p>

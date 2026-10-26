@@ -4,19 +4,19 @@ export function SponsorStrip({ sponsors }: { sponsors: SponsorListing[] }) {
   if (sponsors.length === 0) return null;
 
   return (
-    <section className="prose-width pb-4" aria-labelledby="patrocinadores-titulo">
+    <section className="shell pb-4" aria-labelledby="patrocinadores-titulo">
       <h2 id="patrocinadores-titulo">Patrocinadores</h2>
-      <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+      <ul className="mt-2 divide-y divide-line border-y border-line">
         {sponsors.map((sponsor) => (
-          <li key={sponsor.id} className="border border-line bg-card p-4">
+          <li key={sponsor.id} className="py-3">
             {sponsor.websiteUrl ? (
-              <a href={sponsor.websiteUrl} className="font-semibold hover:text-pine" rel="noopener noreferrer">
+              <a href={sponsor.websiteUrl} className="font-semibold hover:text-accent-ink" rel="noopener noreferrer">
                 {sponsor.name}
               </a>
             ) : (
               <p className="font-semibold">{sponsor.name}</p>
             )}
-            <p className="mt-2 text-sm leading-6 text-muted">{sponsor.blurb}</p>
+            <p className="mt-1 text-sm leading-5 text-muted">{sponsor.blurb}</p>
           </li>
         ))}
       </ul>

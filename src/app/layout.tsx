@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -7,25 +7,20 @@ import { SITE_DESCRIPTION, SITE_NAME, getSiteUrl } from "@/lib/site";
 
 import "./globals.css";
 
-const text = Fraunces({
+const text = Outfit({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-text",
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-  variable: "--font-mono",
-});
+const title = `${SITE_NAME}: usos de inteligencia artificial para negocios`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: `${SITE_NAME} — Usos de inteligencia artificial para negocios`,
-    template: `%s · ${SITE_NAME}`,
+    default: title,
+    template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -33,13 +28,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_419",
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Usos de inteligencia artificial para negocios`,
+    title,
     description: SITE_DESCRIPTION,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Usos de inteligencia artificial para negocios`,
+    title,
     description: SITE_DESCRIPTION,
   },
   robots: { index: true, follow: true },
@@ -48,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${text.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="es" className={`${text.variable} h-full antialiased`}>
       <body className="min-h-full bg-background text-foreground">
         <a
           href="#contenido"

@@ -1,20 +1,26 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { SITE_NAME } from "@/lib/site";
 
 export function SiteHeader() {
+  const path = usePathname();
+  const onDirectory = path === "/" || path.startsWith("/casos");
+  const onSponsor = path.startsWith("/patrocinio");
+
   return (
     <header className="site-header">
-      <div className="prose-width flex items-center justify-between gap-4 py-4">
-        <Link href="/" className="flex items-baseline gap-2 text-foreground">
-          <span className="text-2xl font-medium tracking-tight">{SITE_NAME.replace(" IA", "")}</span>
-          <span className="mark-ia">IA</span>
+      <div className="shell flex items-center justify-between gap-4 py-3">
+        <Link href="/" className="text-[15px] font-semibold tracking-tight text-foreground">
+          {SITE_NAME}
         </Link>
-        <nav aria-label="Principal" className="flex items-center gap-5 text-[0.95rem]">
-          <Link href="/" className="hover:text-pine">
+        <nav aria-label="Principal" className="flex items-center gap-4">
+          <Link href="/" className="nav-link" aria-current={onDirectory ? "page" : undefined}>
             Directorio
           </Link>
-          <Link href="/patrocinio" className="hover:text-pine">
+          <Link href="/patrocinio" className="nav-link" aria-current={onSponsor ? "page" : undefined}>
             Patrocinio
           </Link>
         </nav>

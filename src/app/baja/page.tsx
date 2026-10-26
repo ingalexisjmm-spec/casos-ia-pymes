@@ -14,7 +14,7 @@ export default function BajaPage({
   searchParams: Promise<{ token?: string }>;
 }) {
   return (
-    <div className="prose-width max-w-xl py-14">
+    <div className="shell max-w-xl py-10">
       <h1>Salir de la lista</h1>
       <p className="lede">Si este enlace es de un correo nuestro, confirma y dejamos de escribirte.</p>
       <Suspense fallback={<p className="mt-6 text-sm text-muted">Cargando…</p>}>
