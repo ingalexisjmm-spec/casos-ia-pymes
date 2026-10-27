@@ -7,7 +7,8 @@ import { SITE_NAME } from "@/lib/site";
 
 export function SiteHeader() {
   const path = usePathname();
-  const onDirectory = path === "/" || path.startsWith("/casos");
+  const onDirectory = path === "/";
+  const onCases = path === "/casos" || path.startsWith("/casos/");
   const onSponsor = path.startsWith("/patrocinio");
 
   return (
@@ -19,6 +20,9 @@ export function SiteHeader() {
         <nav aria-label="Principal" className="flex items-center gap-4">
           <Link href="/" className="nav-link" aria-current={onDirectory ? "page" : undefined}>
             Directorio
+          </Link>
+          <Link href="/casos" className="nav-link" aria-current={onCases ? "page" : undefined}>
+            Casos
           </Link>
           <Link href="/patrocinio" className="nav-link" aria-current={onSponsor ? "page" : undefined}>
             Patrocinio

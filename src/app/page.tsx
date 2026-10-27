@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { JsonLd } from "@/components/json-ld";
 import { SponsorStrip } from "@/components/sponsor-strip";
 import { UseCaseExplorer } from "@/components/use-case-explorer";
@@ -35,7 +37,10 @@ export default async function HomePage() {
         <p className="lede">
           Ideas concretas para emprendedores y equipos. Cada ficha dice qué problema resuelve, qué herramientas usa y qué tan difícil es empezar.
         </p>
-        <p className="mt-3">
+        <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          <Link href="/casos" className="link">
+            Índice de casos
+          </Link>
           <a href="#boletin" className="link">
             Recibir notas cortas por correo
           </a>

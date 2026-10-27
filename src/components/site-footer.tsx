@@ -35,6 +35,9 @@ export function SiteFooter() {
         <div className="shell flex flex-wrap items-center justify-between gap-3 py-3 text-sm text-muted">
           <p>{SITE_NAME}</p>
           <nav aria-label="Pie" className="flex gap-4">
+            <Link href="/casos" className="hover:text-foreground">
+              Casos
+            </Link>
             <Link href="/privacidad" className="hover:text-foreground">
               Privacidad
             </Link>
