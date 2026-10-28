@@ -61,6 +61,42 @@ async function CasoBody({ params }: { params: Promise<{ slug: string }> }) {
           isPartOf: { "@type": "WebSite", name: "Casos IA", url: absoluteUrl("/") },
         }}
       />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Casos",
+              item: absoluteUrl("/casos"),
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: item.title,
+              item: absoluteUrl(`/casos/${item.slug}`),
+            },
+          ],
+        }}
+      />
+      <nav aria-label="Ruta" className="mb-4 text-sm">
+        <ol className="flex flex-wrap gap-x-2 gap-y-1">
+          <li>
+            <Link href="/casos" className="link font-normal">
+              Casos
+            </Link>
+            <span aria-hidden="true" className="text-muted">
+              {" "}
+              /{" "}
+            </span>
+          </li>
+          <li aria-current="page" className="text-muted">
+            {item.title}
+          </li>
+        </ol>
+      </nav>
       <h1 className="max-w-3xl">{item.title}</h1>
       <p className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
         <span>{item.categories.map((id) => categoryLabel(id)).join(", ")}</span>

@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const catalog = await getCatalog();
-  const staticRoutes = ["/", "/patrocinio", "/privacidad"].map((path) => ({
+  const staticRoutes = ["/", "/casos", "/patrocinio", "/privacidad"].map((path) => ({
     url: absoluteUrl(path),
   }));
   const cases = catalog.cases.map((item) => ({

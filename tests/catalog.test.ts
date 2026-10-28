@@ -78,8 +78,14 @@ test("el contenido público no usa la palabra local que el producto evita", () =
   const files = [
     "src/data/use-cases.ts",
     "src/app/page.tsx",
+    "src/app/casos/page.tsx",
+    "src/app/casos/[slug]/page.tsx",
     "src/app/layout.tsx",
+    "src/app/not-found.tsx",
     "src/app/patrocinio/page.tsx",
+    "src/app/sitemap.ts",
+    "src/components/site-header.tsx",
+    "src/components/site-footer.tsx",
     "src/components/sponsor-form.tsx",
     "src/lib/email.ts",
     "src/lib/site.ts",
@@ -91,6 +97,26 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     const text = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
     assert.equal(banned.test(text), false, file);
   }
+});
+
+test("el índice /casos lista las fichas y entra en el sitemap", () => {
+  const page = readFileSync(new URL("../src/app/casos/page.tsx", import.meta.url), "utf8");
+  const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  const header = readFileSync(new URL("../src/components/site-header.tsx", import.meta.url), "utf8");
+  const home = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
+  const ficha = readFileSync(new URL("../src/app/casos/[slug]/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /Todos los casos de uso de IA para negocios/);
+  assert.match(page, /canonical: "\/casos"/);
+  assert.match(page, /item\.summary/);
+  assert.match(page, /href=\{`\/casos\/\$\{item\.slug\}`\}/);
+  assert.match(sitemap, /"\/casos"/);
+  assert.match(header, /href="\/casos"/);
+  assert.match(home, /href="\/casos"/);
+  assert.match(ficha, /BreadcrumbList/);
+  assert.match(ficha, /absoluteUrl\("\/casos"\)/);
+  assert.match(ficha, /getRelatedCases/);
+  assert.match(ficha, /También en este tema/);
 });
 
 test("normaliza correos y direcciones", () => {
