@@ -27,6 +27,10 @@ export type UseCase = {
   difficulty: Difficulty;
   sourceUrl: string | null;
   isSeed: boolean;
+  /** Última edición en la base, cuando la ficha se lee de ahí. */
+  updatedAt?: string | null;
+  /** Imagen propia de la ficha. Si no hay, la página usa la imagen de compartir del sitio. */
+  shareImageUrl?: string | null;
 };
 
 export type SponsorListing = {

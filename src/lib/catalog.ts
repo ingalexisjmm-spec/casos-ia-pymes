@@ -1,6 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 
 import { seedUseCases } from "@/data/use-cases";
+import { pickRelatedCases } from "@/lib/related";
 import type { Catalog, SponsorListing, UseCase } from "@/lib/types";
 import { createReadClient, hasSupabaseConfig } from "@/lib/supabase";
 import { isCategoryId, isDifficulty, isSafeHttpUrl } from "@/lib/validators";
@@ -21,6 +22,7 @@ type UseCaseRow = {
   difficulty: string;
   source_url: string | null;
   is_seed: boolean;
+  updated_at: string | null;
 };
 
 function mapRow(row: UseCaseRow): UseCase | null {
@@ -38,7 +40,14 @@ function mapRow(row: UseCaseRow): UseCase | null {
     difficulty: row.difficulty,
     sourceUrl,
     isSeed: row.is_seed,
+    updatedAt: timestamp(row.updated_at),
   };
+}
+
+function timestamp(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
 }
 
 export async function getCatalog(): Promise<Catalog> {
@@ -57,7 +66,7 @@ export async function getCatalog(): Promise<Catalog> {
 
   const { data, error } = await supabase
     .from("use_cases")
-    .select("slug, title, summary, body, categories, tools, difficulty, source_url, is_seed")
+    .select("slug, title, summary, body, categories, tools, difficulty, source_url, is_seed, updated_at")
     .eq("published", true)
     .order("title", { ascending: true });
 
@@ -79,13 +88,7 @@ export async function getUseCase(slug: string): Promise<UseCase | null> {
 
 export async function getRelatedCases(item: UseCase): Promise<UseCase[]> {
   const catalog = await getCatalog();
-  return catalog.cases
-    .filter(
-      (candidate) =>
-        candidate.slug !== item.slug &&
-        candidate.categories.some((category) => item.categories.includes(category)),
-    )
-    .slice(0, 3);
+  return pickRelatedCases(item, catalog.cases);
 }
 
 type SponsorRow = {

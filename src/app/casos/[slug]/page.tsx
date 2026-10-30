@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 import { JsonLd } from "@/components/json-ld";
 import { Prose } from "@/components/prose";
+import { buildCaseMetadata } from "@/lib/case-metadata";
 import { getCatalog, getRelatedCases, getUseCase } from "@/lib/catalog";
 import { absoluteUrl } from "@/lib/site";
 import { categoryLabel, difficultyLabel } from "@/lib/validators";
@@ -22,16 +23,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const item = await getUseCase(slug);
   if (!item) return { title: "Ficha no encontrada" };
-  return {
-    title: item.title,
-    description: item.summary,
-    alternates: { canonical: `/casos/${item.slug}` },
-    openGraph: {
-      title: item.title,
-      description: item.summary,
-      url: `/casos/${item.slug}`,
-    },
-  };
+  return buildCaseMetadata(item);
 }
 
 export default function CasoPage({ params }: { params: Promise<{ slug: string }> }) {

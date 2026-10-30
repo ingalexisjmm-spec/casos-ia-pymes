@@ -3,6 +3,11 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { seedUseCases } from "../src/data/use-cases";
+import { buildCaseMetadata } from "../src/lib/case-metadata";
+import { pickRelatedCases, RELATED_CASE_LIMIT } from "../src/lib/related";
+import { SHARE_IMAGE_PATH } from "../src/lib/share-image";
+import { buildSitemapEntries, caseLastModified } from "../src/lib/sitemap-entries";
+import { sourceLastModified } from "../src/lib/source-date";
 import { CATEGORIES } from "../src/lib/types";
 import { isSafeHttpUrl, normalizeEmail, optionalWebsite } from "../src/lib/validators";
 
@@ -117,7 +122,109 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
   assert.match(ficha, /absoluteUrl\("\/casos"\)/);
   assert.match(ficha, /getRelatedCases/);
   assert.match(ficha, /También en este tema/);
+  assert.match(ficha, /buildCaseMetadata/);
+  assert.match(page, /id="lista-completa"/);
+  assert.match(page, /id="por-tema"/);
+  assert.match(page, /id="por-dificultad"/);
+  assert.match(page, /CATEGORIES\.map/);
+  assert.match(page, /DIFFICULTIES\.map/);
+  assert.match(sitemap, /lastModified/);
+  assert.match(sitemap, /sourceLastModified/);
 });
+
+test("cada ficha publica su propio título y descripción en Twitter y una imagen", () => {
+  for (const item of seedUseCases) {
+    const metadata = buildCaseMetadata(item);
+    const ogTitle = metadata.openGraph?.title;
+    const ogDescription = metadata.openGraph?.description;
+    assert.equal(ogTitle, item.title);
+    assert.equal(ogDescription, item.summary);
+    assert.equal(metadata.twitter?.title, ogTitle);
+    assert.equal(metadata.twitter?.description, ogDescription);
+    const ogImages = metadata.openGraph?.images;
+    const twitterImages = metadata.twitter?.images;
+    assert.ok(Array.isArray(ogImages) && ogImages.length > 0, item.slug);
+    assert.ok(Array.isArray(twitterImages) && twitterImages.length > 0, item.slug);
+    assert.equal(imageUrl(ogImages[0]), SHARE_IMAGE_PATH);
+    assert.equal(imageUrl(twitterImages[0]), SHARE_IMAGE_PATH);
+  }
+
+  const custom = buildCaseMetadata({
+    ...seedUseCases[0],
+    shareImageUrl: "https://cdn.example/ficha.png",
+  });
+  const customImages = custom.openGraph?.images;
+  const customTwitter = custom.twitter?.images;
+  assert.ok(Array.isArray(customImages));
+  assert.ok(Array.isArray(customTwitter));
+  assert.equal(imageUrl(customImages[0]), "https://cdn.example/ficha.png");
+  assert.equal(imageUrl(customTwitter[0]), "https://cdn.example/ficha.png");
+});
+
+test("las fichas relacionadas suben de tres a un máximo de seis del mismo tema", () => {
+  assert.equal(RELATED_CASE_LIMIT, 6);
+  for (const item of seedUseCases) {
+    const related = pickRelatedCases(item, seedUseCases);
+    const possible = seedUseCases.filter(
+      (candidate) =>
+        candidate.slug !== item.slug &&
+        candidate.categories.some((category) => item.categories.includes(category)),
+    ).length;
+    assert.equal(related.length, Math.min(RELATED_CASE_LIMIT, possible), item.slug);
+    assert.ok(related.every((candidate) => candidate.slug !== item.slug));
+    assert.ok(
+      related.every((candidate) => candidate.categories.some((category) => item.categories.includes(category))),
+    );
+  }
+
+  const whatsapp = seedUseCases.find((item) => item.slug === "whatsapp-fuera-de-horario");
+  assert.ok(whatsapp);
+  const related = pickRelatedCases(whatsapp, seedUseCases);
+  assert.ok(related.length >= 5 && related.length <= 6);
+  assert.equal(related[0]?.slug, "leer-audios-de-clientes");
+  assert.equal(related[1]?.slug, "seguimiento-despues-de-la-compra");
+});
+
+test("el sitemap lleva lastmod en cada URL", () => {
+  const contentDate = new Date("2026-10-28T17:55:00.000Z");
+  const homeDate = new Date("2026-10-27T12:00:00.000Z");
+  const updated = new Date("2026-10-01T08:30:00.000Z");
+  const entries = buildSitemapEntries({
+    toAbsoluteUrl: (path) => `https://casos-ia.example${path}`,
+    staticPages: [{ path: "/", lastModified: homeDate }],
+    casesContentDate: contentDate,
+    cases: [
+      seedUseCases[0],
+      { ...seedUseCases[1], updatedAt: updated.toISOString() },
+      { ...seedUseCases[2], updatedAt: "no-es-fecha" },
+    ],
+  });
+  assert.equal(entries.length, 4);
+  assert.ok(entries.every((entry) => entry.lastModified instanceof Date && !Number.isNaN(entry.lastModified.getTime())));
+  assert.equal(entries[0]?.url, "https://casos-ia.example/");
+  assert.equal(entries[0]?.lastModified.toISOString(), homeDate.toISOString());
+  assert.equal(entries[1]?.lastModified.toISOString(), contentDate.toISOString());
+  assert.equal(entries[2]?.lastModified.toISOString(), updated.toISOString());
+  assert.equal(caseLastModified({ ...seedUseCases[2], updatedAt: "no-es-fecha" }, contentDate).toISOString(), contentDate.toISOString());
+});
+
+test("la fecha de las fuentes del sitio es una fecha real", () => {
+  const date = sourceLastModified("src/data/use-cases.ts");
+  assert.equal(Number.isNaN(date.getTime()), false);
+  assert.ok(date.getTime() <= Date.now());
+});
+
+function imageUrl(image: unknown): string | undefined {
+  if (!image) return undefined;
+  if (typeof image === "string") return image;
+  if (image instanceof URL) return image.toString();
+  if (typeof image === "object" && "url" in image) {
+    const url = image.url;
+    if (typeof url === "string") return url;
+    if (url instanceof URL) return url.toString();
+  }
+  return undefined;
+}
 
 test("normaliza correos y direcciones", () => {
   assert.equal(normalizeEmail("  Hola@Empresa.com "), "hola@empresa.com");
