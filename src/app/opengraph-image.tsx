@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Casos IA: usos de inteligencia artificial para negocios";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+import { SHARE_IMAGE_ALT, SHARE_IMAGE_SIZE, SHARE_IMAGE_TYPE } from "@/lib/share-image";
+
+export const alt = SHARE_IMAGE_ALT;
+export const size = SHARE_IMAGE_SIZE;
+export const contentType = SHARE_IMAGE_TYPE;
 
 export default function OpenGraphImage() {
   return new ImageResponse(
