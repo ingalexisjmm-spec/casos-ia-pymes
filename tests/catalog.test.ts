@@ -21,10 +21,17 @@ const sourcedCases = new Map<string, string>([
   ["preguntar-manuales-de-proveedores", "https://support.google.com/notebooklm/answer/16215270"],
   ["fondo-limpio-fotos-de-producto", "https://www.canva.com/help/background-remover/"],
   ["resumir-respuestas-abiertas", "https://support.google.com/docs/answer/16231981"],
+  ["notas-de-voz-a-pedidos", "https://blog.whatsapp.com/introducing-voice-message-transcripts"],
+  [
+    "fotos-producto-fondo-limpio-tienda",
+    "https://help.shopify.com/en/manual/shopify-admin/productivity-tools/media-editor",
+  ],
+  ["notas-videollamadas-con-clientes", "https://support.google.com/meet/answer/14754931"],
+  ["borrador-respuesta-cliente-gmail", "https://support.google.com/mail/answer/13955415"],
 ]);
 
-test("el directorio tiene 26 fichas únicas", () => {
-  assert.equal(seedUseCases.length, 26);
+test("el directorio tiene 30 fichas únicas", () => {
+  assert.equal(seedUseCases.length, 30);
   const slugs = new Set(seedUseCases.map((item) => item.slug));
   assert.equal(slugs.size, seedUseCases.length);
 });
@@ -48,9 +55,9 @@ test("las fichas de ejemplo no inventan una fuente", () => {
   }
 });
 
-test("las cuatro fichas nuevas citan la ayuda oficial y no son ejemplo inicial", () => {
+test("las fichas con fuente oficial no son ejemplo inicial", () => {
   const sourced = seedUseCases.filter((item) => item.sourceUrl);
-  assert.equal(sourced.length, 4);
+  assert.equal(sourced.length, 8);
   for (const item of sourced) {
     assert.equal(item.isSeed, false);
     assert.equal(item.sourceUrl, sourcedCases.get(item.slug));
@@ -69,10 +76,10 @@ test("la ficha y el directorio muestran la fuente en una pestaña nueva", () => 
   }
 });
 
-test("la semilla sql coincide con las 26 fichas", () => {
+test("la semilla sql coincide con las 30 fichas", () => {
   const sql = readFileSync(new URL("../supabase/seed.sql", import.meta.url), "utf8");
   assert.equal(sql.match(/, null, true\)/g)?.length, 22);
-  assert.equal(sql.match(/, false\)/g)?.length, 4);
+  assert.equal(sql.match(/, false\)/g)?.length, 8);
   for (const [slug, url] of sourcedCases) {
     assert.equal(sql.includes(`'${slug}'`), true);
     assert.equal(sql.includes(`'${url}'`), true);
@@ -182,7 +189,18 @@ test("las fichas relacionadas suben de tres a un máximo de seis del mismo tema"
   const related = pickRelatedCases(whatsapp, seedUseCases);
   assert.ok(related.length >= 5 && related.length <= 6);
   assert.equal(related[0]?.slug, "leer-audios-de-clientes");
-  assert.equal(related[1]?.slug, "seguimiento-despues-de-la-compra");
+  assert.equal(related[1]?.slug, "notas-de-voz-a-pedidos");
+  assert.equal(related[2]?.slug, "seguimiento-despues-de-la-compra");
+
+  const minuta = seedUseCases.find((item) => item.slug === "minuta-de-reunion");
+  const videollamada = seedUseCases.find((item) => item.slug === "notas-videollamadas-con-clientes");
+  assert.ok(minuta);
+  assert.ok(videollamada);
+  assert.equal(videollamada.categories.includes("operaciones"), true);
+  assert.equal(minuta.categories.includes("operaciones"), true);
+  assert.ok(
+    pickRelatedCases(minuta, seedUseCases).some((item) => item.slug === "notas-videollamadas-con-clientes"),
+  );
 });
 
 test("el sitemap lleva lastmod en cada URL", () => {
