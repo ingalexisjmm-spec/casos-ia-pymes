@@ -192,5 +192,33 @@ En Google Forms, Gemini resume esas respuestas de texto cuando hay entre 3 y 200
 
 Hace falta un plan elegible de Google Workspace o de Google AI. La ayuda indica que, por ahora, la función está en la computadora y en inglés. El resumen no queda guardado solo: cópialo si lo quieres conservar.
 
-No trates el texto generado como un dato que la encuesta no trae.', array['atencion', 'marketing']::text[], array['Google Forms', 'Google Sheets']::text[], 'medio', 'https://support.google.com/docs/answer/16231981', false)
+No trates el texto generado como un dato que la encuesta no trae.', array['atencion', 'marketing']::text[], array['Google Forms', 'Google Sheets']::text[], 'medio', 'https://support.google.com/docs/answer/16231981', false),
+  ('notas-de-voz-a-pedidos', 'Pasar notas de voz de clientes a pedidos o tareas', 'Transcribes la nota de voz en WhatsApp, pegas el texto en un asistente y revisas el borrador de pedido o de tarea.', 'Un cliente manda el pedido o el encargo en una nota de voz. El texto de esa nota todavía hay que pasarlo a un pedido o a una tarea.
+
+WhatsApp puede transcribir el mensaje. La transcripción se genera en el dispositivo. Se activa en Ajustes, en Chats, en Transcripciones de mensajes de voz, o manteniendo presionado el mensaje y eligiendo transcribir. La publicación oficial indica que parte con algunos idiomas.
+
+Pegas ese texto en un asistente y pides un borrador: qué se pidió, las cantidades y qué dato falta. Una persona lo lee antes de anotarlo o de responder.
+
+Si un monto, una cantidad o una dirección no se lee claro, no lo completes. Pide el dato por escrito.', array['ventas', 'atencion']::text[], array['WhatsApp', 'WhatsApp Business', 'ChatGPT']::text[], 'facil', 'https://blog.whatsapp.com/introducing-voice-message-transcripts', false),
+  ('fotos-producto-fondo-limpio-tienda', 'Fotos de producto con fondo limpio para la tienda', 'Quitas o reemplazas el fondo de las fotos de producto con el editor de multimedia de Shopify, en la computadora o en el teléfono.', 'Las fotos de producto a veces traen la mesa, el piso u otro fondo. En la tienda se ven distintas entre sí.
+
+El editor de multimedia de Shopify puede quitar o reemplazar ese fondo. La ayuda indica que funciona en la computadora y en el teléfono. Lo abres donde aparece el ícono de edición: en la foto del producto, en el editor de la tienda, en los correos de Shopify Messaging o en Contenido, Archivos. No edita imágenes dentro del editor de texto enriquecido.
+
+En el teléfono, ese editor solo trabaja con imágenes. Mira el recorte antes de publicar. Si no te sirve, la ayuda indica que puedes volver a la imagen original.
+
+Esto no cambia el precio ni la ficha del producto. Solo la imagen.', array['marketing']::text[], array['Shopify']::text[], 'facil', 'https://help.shopify.com/en/manual/shopify-admin/productivity-tools/media-editor', false),
+  ('notas-videollamadas-con-clientes', 'Notas automáticas de videollamadas con clientes', '“Toma notas por mí” en Google Meet guarda las notas en un documento y envía un resumen por correo a quien organiza la videollamada.', 'En una videollamada con un cliente se acuerdan plazos, cantidades y siguientes pasos. Si nadie los anota, después hay que reconstruir la conversación.
+
+En Google Meet, “Toma notas por mí” guarda las notas en un documento de Google. Quien organiza la reunión recibe un correo con el resumen y el enlace a ese documento. Quién más lo recibe depende de lo que se haya elegido al compartir. Hace falta una edición elegible de Google Workspace o un plan de Google AI. La ayuda indica que la función usa un solo idioma por reunión y que el español está entre esos idiomas.
+
+Meet avisa en la llamada que se están tomando notas. Recomienda reuniones de 15 minutos a 8 horas. El resumen puede quedar incompleto o no generarse: léelo antes de dar una tarea por hecha.
+
+Esas notas no nombran solas a un responsable. La ficha Minuta con tareas y responsables sirve para pasar los acuerdos a tareas con nombre, y una persona confirma qué quedó encargado.', array['operaciones', 'ventas']::text[], array['Google Meet', 'Google Docs']::text[], 'facil', 'https://support.google.com/meet/answer/14754931', false),
+  ('borrador-respuesta-cliente-gmail', 'Primer borrador de respuesta a un cliente en Gmail', '“Ayúdame a escribir” en Gmail redacta o ajusta la respuesta. Una persona la revisa antes de enviarla.', 'Responder a un cliente en Gmail parte de una frase suelta. Ordenar el tono, el plazo o lo que se ofrece toma el resto.
+
+Gemini, con “Ayúdame a escribir”, redacta ese borrador o ajusta el que ya empezaste. Lo abres al responder o en Redactar, escribes la petición en la barra de abajo y eliges Crear. Tú lees el texto y lo corriges antes de enviarlo.
+
+Hace falta un plan elegible de Google Workspace o de Google AI. La ayuda indica que la disponibilidad cambia según el idioma y el país: una cuenta personal de Google queda limitada a Estados Unidos, y con un plan elegible está en varios idiomas.
+
+El borrador puede usar datos de otros correos y de Drive. No envíes un monto, una fecha o una promesa sin comprobarla en el hilo.', array['atencion']::text[], array['Gmail']::text[], 'facil', 'https://support.google.com/mail/answer/13955415', false)
 on conflict (slug) do nothing;
