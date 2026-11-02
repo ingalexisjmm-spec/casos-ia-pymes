@@ -120,6 +120,8 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
 
   assert.match(page, /Todos los casos de uso de IA para negocios/);
   assert.match(page, /canonical: "\/casos"/);
+  assert.match(page, /DEFAULT_SHARE_IMAGE/);
+  assert.match(page, /summary_large_image/);
   assert.match(page, /item\.summary/);
   assert.match(page, /href=\{`\/casos\/\$\{item\.slug\}`\}/);
   assert.match(sitemap, /"\/casos"/);

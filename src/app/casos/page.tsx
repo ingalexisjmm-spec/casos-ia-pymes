@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { JsonLd } from "@/components/json-ld";
 import { getCatalog } from "@/lib/catalog";
+import { DEFAULT_SHARE_IMAGE } from "@/lib/share-image";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { CATEGORIES, DIFFICULTIES, type UseCase } from "@/lib/types";
 
@@ -18,10 +19,13 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/casos",
+    images: [DEFAULT_SHARE_IMAGE],
   },
   twitter: {
+    card: "summary_large_image",
     title,
     description,
+    images: [DEFAULT_SHARE_IMAGE],
   },
 };
 

@@ -17,7 +17,8 @@ export type ShareImage = {
   type?: string;
 };
 
-const defaultShareImage: ShareImage = {
+/** Imagen de compartir del sitio. La misma que usan el inicio y /patrocinio. */
+export const DEFAULT_SHARE_IMAGE: ShareImage = {
   url: SHARE_IMAGE_PATH,
   width: SHARE_IMAGE_SIZE.width,
   height: SHARE_IMAGE_SIZE.height,
@@ -28,7 +29,7 @@ const defaultShareImage: ShareImage = {
 /** Usa la imagen de la ficha si ya existe. Si no, la imagen de compartir del sitio. */
 export function shareImageFor(item: Pick<UseCase, "title" | "shareImageUrl">): ShareImage {
   const custom = item.shareImageUrl?.trim();
-  if (!custom) return defaultShareImage;
+  if (!custom) return DEFAULT_SHARE_IMAGE;
   return {
     url: custom,
     width: SHARE_IMAGE_SIZE.width,
