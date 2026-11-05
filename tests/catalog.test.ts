@@ -103,6 +103,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     "src/lib/site.ts",
     "README.md",
     "supabase/migrations/20261026005217_init_directory.sql",
+    "supabase/migrations/20261105121227_public_sponsor_livemode.sql",
   ];
   const banned = new RegExp(`p${"y"}me?s?`, "i");
   for (const file of files) {
@@ -203,6 +204,44 @@ test("las fichas relacionadas suben de tres a un máximo de seis del mismo tema"
   assert.ok(
     pickRelatedCases(minuta, seedUseCases).some((item) => item.slug === "notas-videollamadas-con-clientes"),
   );
+});
+
+test("el sitemap se lee en cada request e incluye las fichas que no son semilla", () => {
+  const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  assert.match(sitemap, /await connection\(\)/);
+  assert.equal(sitemap.includes("isSeed"), false);
+
+  const contentDate = new Date("2026-11-02T14:22:20.635Z");
+  const entries = buildSitemapEntries({
+    toAbsoluteUrl: (path) => `https://casos-ia.example${path}`,
+    staticPages: [],
+    casesContentDate: contentDate,
+    cases: seedUseCases,
+  });
+  const caseUrls = entries.filter((entry) => entry.url.includes("/casos/"));
+  assert.equal(caseUrls.length, seedUseCases.length);
+  for (const slug of sourcedCases.keys()) {
+    assert.equal(
+      caseUrls.some((entry) => entry.url.endsWith(`/casos/${slug}`)),
+      true,
+      slug,
+    );
+  }
+  assert.ok(caseUrls.every((entry) => entry.lastModified.toISOString() === contentDate.toISOString()));
+});
+
+test("el listado público deja fuera los patrocinios de prueba", () => {
+  const sql = readFileSync(
+    new URL("../supabase/migrations/20261105121227_public_sponsor_livemode.sql", import.meta.url),
+    "utf8",
+  );
+  const webhook = readFileSync(new URL("../src/app/api/stripe/webhook/route.ts", import.meta.url), "utf8");
+  assert.match(sql, /add column livemode boolean not null default false/);
+  assert.match(sql, /status = 'paid'/);
+  assert.match(sql, /show_listing = true/);
+  assert.match(sql, /not like 'cs_test_%'/);
+  assert.match(sql, /like 'cs_live_%'/);
+  assert.match(webhook, /livemode: session\.livemode === true/);
 });
 
 test("el sitemap lleva lastmod en cada URL", () => {
