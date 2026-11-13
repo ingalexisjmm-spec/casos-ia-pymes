@@ -7,7 +7,7 @@ import { buildCaseMetadata } from "../src/lib/case-metadata";
 import { pickRelatedCases, RELATED_CASE_LIMIT } from "../src/lib/related";
 import { SHARE_IMAGE_PATH } from "../src/lib/share-image";
 import { buildSitemapEntries, caseLastModified } from "../src/lib/sitemap-entries";
-import { sourceLastModified } from "../src/lib/source-date";
+import { SITEMAP_CASE_FALLBACK_LAST_MODIFIED, STATIC_SITEMAP_PAGES } from "../src/lib/sitemap-static";
 import { CATEGORIES } from "../src/lib/types";
 import { isSafeHttpUrl, normalizeEmail, optionalWebsite } from "../src/lib/validators";
 
@@ -96,6 +96,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     "src/app/not-found.tsx",
     "src/app/patrocinio/page.tsx",
     "src/app/sitemap.ts",
+    "src/lib/sitemap-static.ts",
     "src/components/site-header.tsx",
     "src/components/site-footer.tsx",
     "src/components/sponsor-form.tsx",
@@ -115,6 +116,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
 test("el índice /casos lista las fichas y entra en el sitemap", () => {
   const page = readFileSync(new URL("../src/app/casos/page.tsx", import.meta.url), "utf8");
   const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  const staticPages = readFileSync(new URL("../src/lib/sitemap-static.ts", import.meta.url), "utf8");
   const header = readFileSync(new URL("../src/components/site-header.tsx", import.meta.url), "utf8");
   const home = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
   const ficha = readFileSync(new URL("../src/app/casos/[slug]/page.tsx", import.meta.url), "utf8");
@@ -125,7 +127,8 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
   assert.match(page, /summary_large_image/);
   assert.match(page, /item\.summary/);
   assert.match(page, /href=\{`\/casos\/\$\{item\.slug\}`\}/);
-  assert.match(sitemap, /"\/casos"/);
+  assert.match(staticPages, /"\/casos"/);
+  assert.match(sitemap, /STATIC_SITEMAP_PAGES/);
   assert.match(header, /href="\/casos"/);
   assert.match(home, /href="\/casos"/);
   assert.match(ficha, /BreadcrumbList/);
@@ -138,8 +141,8 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
   assert.match(page, /id="por-dificultad"/);
   assert.match(page, /CATEGORIES\.map/);
   assert.match(page, /DIFFICULTIES\.map/);
-  assert.match(sitemap, /lastModified/);
-  assert.match(sitemap, /sourceLastModified/);
+  assert.match(staticPages, /lastModified/);
+  assert.equal(/sourceLastModified|source-date|statSync|execFileSync|node:fs|node:child_process/.test(sitemap), false);
 });
 
 test("cada ficha publica su propio título y descripción en Twitter y una imagen", () => {
@@ -267,10 +270,24 @@ test("el sitemap lleva lastmod en cada URL", () => {
   assert.equal(caseLastModified({ ...seedUseCases[2], updatedAt: "no-es-fecha" }, contentDate).toISOString(), contentDate.toISOString());
 });
 
-test("la fecha de las fuentes del sitio es una fecha real", () => {
-  const date = sourceLastModified("src/data/use-cases.ts");
-  assert.equal(Number.isNaN(date.getTime()), false);
-  assert.ok(date.getTime() <= Date.now());
+test("las rutas estáticas del sitemap usan fechas fijas y no leen archivos", () => {
+  const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  const dates = readFileSync(new URL("../src/lib/sitemap-static.ts", import.meta.url), "utf8");
+  assert.match(sitemap, /SITEMAP_CASE_FALLBACK_LAST_MODIFIED/);
+  assert.equal(/sourceLastModified|source-date|statSync|execFileSync|from "node:fs"|from "node:child_process"/.test(sitemap), false);
+  assert.equal(/statSync|execFileSync|from "node:fs"|from "node:child_process"/.test(dates), false);
+  const instants = [
+    SITEMAP_CASE_FALLBACK_LAST_MODIFIED,
+    ...STATIC_SITEMAP_PAGES.map((page) => page.lastModified),
+  ];
+  for (const date of instants) {
+    assert.equal(Number.isNaN(date.getTime()), false);
+    assert.ok(date.getTime() <= Date.now());
+  }
+  assert.deepEqual(
+    STATIC_SITEMAP_PAGES.map((page) => page.path),
+    ["/", "/casos", "/patrocinio", "/privacidad"],
+  );
 });
 
 function imageUrl(image: unknown): string | undefined {
