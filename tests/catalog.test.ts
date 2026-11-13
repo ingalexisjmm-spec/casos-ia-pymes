@@ -7,7 +7,7 @@ import { buildCaseMetadata } from "../src/lib/case-metadata";
 import { pickRelatedCases, RELATED_CASE_LIMIT } from "../src/lib/related";
 import { SHARE_IMAGE_PATH } from "../src/lib/share-image";
 import { buildSitemapEntries, caseLastModified } from "../src/lib/sitemap-entries";
-import { sourceLastModified } from "../src/lib/source-date";
+import { SITEMAP_CASE_FALLBACK_LAST_MODIFIED, STATIC_SITEMAP_PAGES } from "../src/lib/sitemap-static";
 import { CATEGORIES } from "../src/lib/types";
 import { isSafeHttpUrl, normalizeEmail, optionalWebsite } from "../src/lib/validators";
 
@@ -96,6 +96,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     "src/app/not-found.tsx",
     "src/app/patrocinio/page.tsx",
     "src/app/sitemap.ts",
+    "src/lib/sitemap-static.ts",
     "src/components/site-header.tsx",
     "src/components/site-footer.tsx",
     "src/components/sponsor-form.tsx",
@@ -103,6 +104,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
     "src/lib/site.ts",
     "README.md",
     "supabase/migrations/20261026005217_init_directory.sql",
+    "supabase/migrations/20261105121227_public_sponsor_livemode.sql",
   ];
   const banned = new RegExp(`p${"y"}me?s?`, "i");
   for (const file of files) {
@@ -114,6 +116,7 @@ test("el contenido público no usa la palabra local que el producto evita", () =
 test("el índice /casos lista las fichas y entra en el sitemap", () => {
   const page = readFileSync(new URL("../src/app/casos/page.tsx", import.meta.url), "utf8");
   const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  const staticPages = readFileSync(new URL("../src/lib/sitemap-static.ts", import.meta.url), "utf8");
   const header = readFileSync(new URL("../src/components/site-header.tsx", import.meta.url), "utf8");
   const home = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
   const ficha = readFileSync(new URL("../src/app/casos/[slug]/page.tsx", import.meta.url), "utf8");
@@ -124,7 +127,8 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
   assert.match(page, /summary_large_image/);
   assert.match(page, /item\.summary/);
   assert.match(page, /href=\{`\/casos\/\$\{item\.slug\}`\}/);
-  assert.match(sitemap, /"\/casos"/);
+  assert.match(staticPages, /"\/casos"/);
+  assert.match(sitemap, /STATIC_SITEMAP_PAGES/);
   assert.match(header, /href="\/casos"/);
   assert.match(home, /href="\/casos"/);
   assert.match(ficha, /BreadcrumbList/);
@@ -137,8 +141,8 @@ test("el índice /casos lista las fichas y entra en el sitemap", () => {
   assert.match(page, /id="por-dificultad"/);
   assert.match(page, /CATEGORIES\.map/);
   assert.match(page, /DIFFICULTIES\.map/);
-  assert.match(sitemap, /lastModified/);
-  assert.match(sitemap, /sourceLastModified/);
+  assert.match(staticPages, /lastModified/);
+  assert.equal(/sourceLastModified|source-date|statSync|execFileSync|node:fs|node:child_process/.test(sitemap), false);
 });
 
 test("cada ficha publica su propio título y descripción en Twitter y una imagen", () => {
@@ -205,6 +209,44 @@ test("las fichas relacionadas suben de tres a un máximo de seis del mismo tema"
   );
 });
 
+test("el sitemap se lee en cada request e incluye las fichas que no son semilla", () => {
+  const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  assert.match(sitemap, /await connection\(\)/);
+  assert.equal(sitemap.includes("isSeed"), false);
+
+  const contentDate = new Date("2026-11-02T14:22:20.635Z");
+  const entries = buildSitemapEntries({
+    toAbsoluteUrl: (path) => `https://casos-ia.example${path}`,
+    staticPages: [],
+    casesContentDate: contentDate,
+    cases: seedUseCases,
+  });
+  const caseUrls = entries.filter((entry) => entry.url.includes("/casos/"));
+  assert.equal(caseUrls.length, seedUseCases.length);
+  for (const slug of sourcedCases.keys()) {
+    assert.equal(
+      caseUrls.some((entry) => entry.url.endsWith(`/casos/${slug}`)),
+      true,
+      slug,
+    );
+  }
+  assert.ok(caseUrls.every((entry) => entry.lastModified.toISOString() === contentDate.toISOString()));
+});
+
+test("el listado público deja fuera los patrocinios de prueba", () => {
+  const sql = readFileSync(
+    new URL("../supabase/migrations/20261105121227_public_sponsor_livemode.sql", import.meta.url),
+    "utf8",
+  );
+  const webhook = readFileSync(new URL("../src/app/api/stripe/webhook/route.ts", import.meta.url), "utf8");
+  assert.match(sql, /add column livemode boolean not null default false/);
+  assert.match(sql, /status = 'paid'/);
+  assert.match(sql, /show_listing = true/);
+  assert.match(sql, /not like 'cs_test_%'/);
+  assert.match(sql, /like 'cs_live_%'/);
+  assert.match(webhook, /livemode: session\.livemode === true/);
+});
+
 test("el sitemap lleva lastmod en cada URL", () => {
   const contentDate = new Date("2026-10-28T17:55:00.000Z");
   const homeDate = new Date("2026-10-27T12:00:00.000Z");
@@ -228,10 +270,24 @@ test("el sitemap lleva lastmod en cada URL", () => {
   assert.equal(caseLastModified({ ...seedUseCases[2], updatedAt: "no-es-fecha" }, contentDate).toISOString(), contentDate.toISOString());
 });
 
-test("la fecha de las fuentes del sitio es una fecha real", () => {
-  const date = sourceLastModified("src/data/use-cases.ts");
-  assert.equal(Number.isNaN(date.getTime()), false);
-  assert.ok(date.getTime() <= Date.now());
+test("las rutas estáticas del sitemap usan fechas fijas y no leen archivos", () => {
+  const sitemap = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
+  const dates = readFileSync(new URL("../src/lib/sitemap-static.ts", import.meta.url), "utf8");
+  assert.match(sitemap, /SITEMAP_CASE_FALLBACK_LAST_MODIFIED/);
+  assert.equal(/sourceLastModified|source-date|statSync|execFileSync|from "node:fs"|from "node:child_process"/.test(sitemap), false);
+  assert.equal(/statSync|execFileSync|from "node:fs"|from "node:child_process"/.test(dates), false);
+  const instants = [
+    SITEMAP_CASE_FALLBACK_LAST_MODIFIED,
+    ...STATIC_SITEMAP_PAGES.map((page) => page.lastModified),
+  ];
+  for (const date of instants) {
+    assert.equal(Number.isNaN(date.getTime()), false);
+    assert.ok(date.getTime() <= Date.now());
+  }
+  assert.deepEqual(
+    STATIC_SITEMAP_PAGES.map((page) => page.path),
+    ["/", "/casos", "/patrocinio", "/privacidad"],
+  );
 });
 
 function imageUrl(image: unknown): string | undefined {

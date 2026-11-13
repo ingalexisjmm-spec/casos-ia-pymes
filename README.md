@@ -55,7 +55,7 @@ Con `STRIPE_SECRET_KEY`, el servidor crea la sesión con un importe de USD 149 (
 
 1. Entra en [supabase.com/dashboard](https://supabase.com/dashboard) y crea un proyecto.
 2. Abre el SQL Editor.
-3. Pega y ejecuta `supabase/migrations/20261026005217_init_directory.sql`.
+3. Pega y ejecuta los archivos de `supabase/migrations/` en orden de nombre. Si el esquema inicial ya está aplicado, ejecuta solo las migraciones posteriores.
 4. Pega y ejecuta `supabase/seed.sql`.
 5. En Project Settings → Data API copia la URL del proyecto y la clave anon (o publishable) a `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 6. En las claves del proyecto copia la `service_role` a `SUPABASE_SERVICE_ROLE_KEY`.
@@ -64,7 +64,7 @@ La migración deja así el acceso:
 
 - `use_cases`: la clave anon solo lee filas con `published = true`.
 - `newsletter_subscribers` y `sponsors`: sin políticas para anon. Solo escribe el servidor con la clave de servicio.
-- `sponsor_listings`: vista pública con nombre, enlace y frase de los patrocinios pagados. No incluye el correo.
+- `sponsor_listings`: vista pública con nombre, enlace y frase de los patrocinios pagados en Stripe live. Un cobro de prueba (`cs_test_`, sandbox) no entra. No incluye el correo.
 
 Si cambias el texto de las fichas en `src/data/use-cases.ts`, regenera la semilla:
 
@@ -102,7 +102,7 @@ Eventos del endpoint:
 - `checkout.session.async_payment_succeeded`
 - `checkout.session.async_payment_failed`
 
-La ficha pasa a `paid` solo si `payment_status` no es `unpaid`. Así un método de pago lento no se publica antes de tiempo. La URL del endpoint es `https://TU_DOMINIO/api/stripe/webhook`. En local puedes reenviarla con la CLI de Stripe.
+La ficha pasa a `paid` solo si `payment_status` no es `unpaid`. Así un método de pago lento no se publica antes de tiempo. El webhook guarda `livemode` de la sesión: el listado público omite el modo test. La URL del endpoint es `https://TU_DOMINIO/api/stripe/webhook`. En local puedes reenviarla con la CLI de Stripe.
 
 No actives impuestos automáticos en este código. Si más adelante usas Stripe Tax, primero tiene que existir un registro fiscal activo. Si no, Stripe no calcula impuesto y parece que sí.
 
@@ -120,7 +120,7 @@ La sesión de Checkout lleva `integration_identifier` `casos-ia-patrocinio-bvkrm
 8. En Stripe, crea el webhook apuntando a `https://tu-dominio/api/stripe/webhook` con los tres eventos de arriba.
 9. Copia el signing secret a `STRIPE_WEBHOOK_SECRET` y redeploy.
 
-Las fichas leídas de Supabase se revalidan solas en unos 15 minutos. Un nuevo deploy también las refresca. El webhook invalida la lista de patrocinadores en cuanto el pago queda confirmado.
+Las fichas leídas de Supabase se revalidan solas en unos 15 minutos. Un nuevo deploy también las refresca. El sitemap se arma en cada lectura con esas mismas fichas publicadas, así que un caso nuevo entra sin esperar otro deploy. El webhook invalida la lista de patrocinadores en cuanto el pago queda confirmado.
 
 ## Qué incluye esta versión
 

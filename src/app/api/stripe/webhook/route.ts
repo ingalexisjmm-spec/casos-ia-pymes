@@ -65,6 +65,7 @@ export async function POST(request: Request) {
     .from("sponsors")
     .update({
       status: "paid",
+      livemode: session.livemode === true,
       paid_at: new Date().toISOString(),
       stripe_checkout_session_id: session.id,
     })
